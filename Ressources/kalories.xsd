@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://www.example.org/kalories" 
+xmlns:healthyns="http://www.example.org/kalories" 
+elementFormDefault="qualified">
+	<element name="kalories" type="healthyns:type" />
+	
+	<complexType name="type">
+		<sequence>
+			<element name="base" maxOccurs="1">
+				<complexType>
+					<simpleContent>
+				    	<extension base="positiveInteger">
+				        	<attribute name="metric" default="kcal" type="string"  use="optional" />
+				        </extension>
+				    </simpleContent>
+				</complexType>
+			</element>
+		</sequence>		        
+	</complexType>
+	
+	<simpleType name="metric">
+    	<restriction base="positiveInteger">
+	    	<pattern value="kcal|kJ" />
+	    </restriction>
+    </simpleType>
+	
+</schema>

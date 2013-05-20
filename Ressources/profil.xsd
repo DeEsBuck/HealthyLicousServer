@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://www.example.org/profil" 
+xmlns:healthyns="http://www.example.org/profil" 
+elementFormDefault="qualified">
+
+	<element name="profil" type="healthyns:profil_typ" />
+	
+	<complexType name="profil_typ">
+		<sequence>
+			<element name="alter" type="int"/>
+			<element name="gewicht">
+				<complexType>
+					<simpleContent>
+						<extension base="integer">
+							<attribute name="w_metric" type="integer" />
+						</extension>	
+					</simpleContent>
+				</complexType>
+			</element>
+			<element name="groesse">
+				<complexType>
+					<simpleContent>
+						<extension base="int">
+							<attribute name="h_metric" type="int" />
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+			<element name="geschlecht">
+			  <simpleType>
+			    <restriction base="string">
+			      <pattern value="male|female"/>
+			    </restriction>
+			  </simpleType>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<simpleType name="w_metric">
+		<restriction base="integer">
+			<pattern value="kg" />
+			<maxInclusive value="100" />
+			<minInclusive value="30" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="h_metric">
+		<restriction base="integer">
+			<pattern value="cm" />
+			<maxInclusive value="290" />
+			<minInclusive value="100" />
+		</restriction>
+	</simpleType>				
+
+</schema>
