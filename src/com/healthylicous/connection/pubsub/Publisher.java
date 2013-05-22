@@ -31,15 +31,23 @@ public class Publisher {
 //			handler.discoverNodes(TOPIC);
 //			handler.getAffiliation(TOPIC);
 //			handler.delAllItems(TOPIC);
-			handler.publishPayload(TOPIC, new DataHandler().setResult());
-//			handler.getItem(TOPIC);
 			
+//			handler.getItem(TOPIC);
 			
 			while(true){
 				Scanner scan = new Scanner(System.in);
-				System.out.println("Titel eingeben: ");
+				System.out.println("Wähle r oder k");
 				String input = scan.next();
-				handler.publishPayload(TOPIC, new DataHandler().setKalories(input));
+				if (input.matches("r")) {
+					handler.publishPayload(TOPIC, new DataHandler().setResult());
+				break;
+				}
+				else if(input.matches("k")){
+					System.out.println("Titel eingeben: ");
+					handler.publishPayload(TOPIC, new DataHandler().setKalories(input));
+				}
+				else
+					System.exit(0);
 //				handler.deleteTopic(input);
 			}
 		} catch (XMPPException e) {

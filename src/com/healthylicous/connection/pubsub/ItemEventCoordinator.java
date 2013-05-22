@@ -17,9 +17,11 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
         
         
         System.out.println(new DataHandler().getResultTag(items.getItems().toString()));
+        System.out.println(new DataHandler().getResultGewicht(items.getItems().toString()));
+        System.out.println(new DataHandler().getResultName(items.getItems().toString()));
         new DataHandler().getResults(items.getItems().toString());
         
-        System.out.println(new DataHandler().getKalories(items));
+//        System.out.println(new DataHandler().getKalories(items));
         
         
 //        System.out.println(items.getNodeId());

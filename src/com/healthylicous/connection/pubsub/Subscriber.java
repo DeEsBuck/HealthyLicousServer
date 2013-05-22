@@ -31,10 +31,10 @@ public class Subscriber {
 //			con.deListener(TOPIC);
 			
 			DataHandler data = new DataHandler();
-			System.out.println(data.getResultTag(con.getItem(TOPIC)));
-			System.out.println(data.getResultGewicht(con.getItem(TOPIC)));
-			System.out.println(data.getResultName(con.getItem(TOPIC)));
-			data.getResults(con.getItem(TOPIC));
+//			System.out.println(data.getResultTag(con.getItem(TOPIC)));
+//			System.out.println(data.getResultGewicht(con.getItem(TOPIC)));
+//			System.out.println(data.getResultName(con.getItem(TOPIC)));
+//			data.getResults(con.getItem(TOPIC));
 			System.out.println(con.getItem(TOPIC));
 //			con.getPersistedItems(TOPIC);
 //			con.getCurrentItems(TOPIC);
