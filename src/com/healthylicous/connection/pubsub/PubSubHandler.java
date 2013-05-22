@@ -1,6 +1,5 @@
-package Connection;
+package com.healthylicous.connection.pubsub;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +24,7 @@ import org.jivesoftware.smackx.pubsub.Subscription;
 import org.jivesoftware.smackx.pubsub.provider.ItemProvider;
 
 public class PubSubHandler extends XMPPConnection{
-	private static final String HOST = "doro-f5sr";
+	private static final String HOST = "Asus";
 	private static final int PORT = 5222;
 	
 	static String host;
@@ -62,7 +61,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @return
 	 */
 	private PubSubManager createPubSubManager() {
-		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub." + HOST);
+		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub.doro-f5sr");
 		return mgr;
 	}
 	
@@ -73,7 +72,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @throws XMPPException
 	 */
 	private Node getNode(String topicID) throws XMPPException{
-		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub." + HOST);
+		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub.doro-f5sr");
 		Node n = mgr.getNode(topicID);
 		return n;
 	}
@@ -179,7 +178,16 @@ public class PubSubHandler extends XMPPConnection{
 	public void getItems(String topicID) throws XMPPException {
 		 Iterable<Item> disco = ((LeafNode)getNode(topicID)).getItems();
 		 for (Item i : disco) {
-	        System.out.println("ItemResult: " + i.toString());
+	        System.out.println("ItemsResult: " + i.toString());
+		 }
+	}
+	
+	public void getItem(String topicID) throws XMPPException {
+		 int index = getNode(topicID).getSubscriptions().size()-1;
+		 String sub = getNode(topicID).getSubscriptions().get(index).getId();
+		 Iterable<Item> disco = ((LeafNode)getNode(topicID)).getItems(sub);
+		 for (Item i : disco) {
+	        System.out.println("ItemsResult: " + i.toString());
 		 }
 	}
 	

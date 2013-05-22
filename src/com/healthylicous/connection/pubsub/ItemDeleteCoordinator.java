@@ -1,4 +1,4 @@
-package Connection;
+package com.healthylicous.connection.pubsub;
 import org.jivesoftware.smackx.pubsub.ItemDeleteEvent;
 import org.jivesoftware.smackx.pubsub.listener.ItemDeleteListener;
 

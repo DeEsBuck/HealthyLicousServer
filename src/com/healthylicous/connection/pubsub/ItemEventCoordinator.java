@@ -1,5 +1,4 @@
-package Connection;
-import java.lang.reflect.Array;
+package com.healthylicous.connection.pubsub;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -10,6 +9,8 @@ import org.jivesoftware.smackx.pubsub.LeafNode;
 import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
+import com.healthylicous.connection.data.DataHandler;
+
 
 public class ItemEventCoordinator<T> implements ItemEventListener {
 
@@ -18,7 +19,7 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 //		System.out.println("Item count: " + items.getItems().size());
 //        System.out.println(items);
 //        System.out.println(items.isDelayed());
-//        System.out.println(items.getItems().toString());
+        System.out.println(items.getItems().toString());
         System.out.println(items.getPublishedDate());
         
         System.out.println(new DataHandler().getResult(items));

@@ -1,11 +1,8 @@
-package Connection;
-
-import java.util.Iterator;
+package com.healthylicous.connection.pubsub;
 
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smackx.pubsub.Item;
 
 public class Subscriber {
 	public static final String TOPIC = "Topic";
@@ -30,10 +27,11 @@ public class Subscriber {
 			con.discoItems(TOPIC);
 			con.getChildElXML(TOPIC);
 			con.deListener(TOPIC);
-//			con.getItems(TOPIC);
-			con.getPersistedItems(TOPIC);
+			con.getItem(TOPIC);
+//			con.getPersistedItems(TOPIC);
+			con.getCurrentItems(TOPIC);
 			con.getAffiliation(TOPIC);
-			con.unSubscribe(con.getUser(), TOPIC);
+//			con.unSubscribe(con.getUser(), TOPIC);
 
 		} catch (XMPPException e) {
 			e.printStackTrace();

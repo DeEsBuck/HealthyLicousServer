@@ -1,4 +1,4 @@
-package Connection;
+package com.healthylicous.connection.data;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.SimplePayload;
+
 
 public class DataHandler {
 
@@ -39,7 +40,7 @@ public class DataHandler {
             System.out.println(items.getItems().toString());
         }
         else
-        	System.out.println("Nööööööööööööööö, passt nischt");
+        	System.out.println("Ung�ltig");
 		
         return kalories;
 	}
@@ -201,7 +202,7 @@ public class DataHandler {
 		Pattern kohlehydrate = Pattern.compile("57,0</kohlenhydrate>");
 		
 		
-        Matcher ma = regex.matcher(items.getItems().toString());
+        Matcher ma = tageszeit.matcher(items.getItems().toString());
         String geschlecht = null;
         
         if (ma.find()) {

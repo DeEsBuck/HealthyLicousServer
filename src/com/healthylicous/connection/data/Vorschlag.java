@@ -1,4 +1,4 @@
-package Connection;
+package com.healthylicous.connection.data;
 
 public class Vorschlag {
 

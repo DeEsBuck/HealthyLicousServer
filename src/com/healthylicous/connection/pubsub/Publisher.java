@@ -1,9 +1,11 @@
-package Connection;
+package com.healthylicous.connection.pubsub;
 
 import java.util.Scanner;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+
+import com.healthylicous.connection.data.DataHandler;
 
 public class Publisher {
 	public static final String TOPIC = "Topic";
@@ -13,6 +15,7 @@ public class Publisher {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		SASLAuthentication.supportSASLMechanism("PLAIN");
 		XMPPConnection.DEBUG_ENABLED = true;
@@ -26,9 +29,10 @@ public class Publisher {
 			
 //			handler.createTopic(TOPIC);
 			handler.discoverNodes(TOPIC);
-			handler.getAffiliation(TOPIC);
+//			handler.getAffiliation(TOPIC);
 //			handler.delAllItems(TOPIC);
-			handler.publishPayload(TOPIC, new DataHandler().setResult());
+//			handler.publishPayload(TOPIC, new DataHandler().setResult());
+			handler.getItem(TOPIC);
 			
 			
 			while(true){
