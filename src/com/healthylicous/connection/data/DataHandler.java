@@ -1,5 +1,7 @@
 package com.healthylicous.connection.data;
 
+import java.util.Collection;
+import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -140,10 +142,10 @@ public class DataHandler {
         return geschlecht;
 	}
 	
-	public String getResult(ItemPublishEvent items) {
-		return items.getItems().toString();
-	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public PayloadItem setResult() {
 		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result'>"+setVorschlag("1")+"</result>");
 		PayloadItem payloaditem = new PayloadItem(null, payload);
@@ -151,6 +153,11 @@ public class DataHandler {
 		
 	}
 	
+	/**
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public String setVorschlag(String index) {
 		String s = "<vorschlag  id='"+index+"' tageszeit='"+Vorschlag.head(Vorschlag.Head.TAGESZEIT)+"'><name metric='g' gewicht='"+Vorschlag.head(Vorschlag.Head.GEWICHT)+"'>"+Vorschlag.head(Vorschlag.Head.NAME)+"</name><kalorien metric='kcal'>"+Vorschlag.head(Vorschlag.Head.KALORIEN)+"</kalorien><fluessigkeit metric='l'>"+Vorschlag.head(Vorschlag.Head.FLUESSIGKEIT)+"</fluessigkeit>"+naehrstoffe()+mselemente()+vitamine()+"</vorschlag>";
 		return s;
@@ -162,7 +169,7 @@ public class DataHandler {
 	}
 
 	private String mselemente() {
-		String m = "<mselemente><magnesium metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.MAGNESIUM)+"</magnesium><calcium metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.CALCIUM)+"</calcium><eisen metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.EISEN)+"</eisen><jod metric='microg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.JOD)+"</jod><fluorid metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.FLOURID)+"</fluorid><zink metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.ZINK)+"</zink><selen metric='microg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.SELEN)+"</selen></mselemente>";
+		String m = "<mselemente><magnesium metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.MAGNESIUM)+"</magnesium><calcium metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.CALCIUM)+"</calcium><eisen metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.EISEN)+"</eisen><jod metric='microg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.JOD)+"</jod><fluorid metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.FLUORID)+"</fluorid><zink metric='mg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.ZINK)+"</zink><selen metric='microg'>"+Vorschlag.mselemente(Vorschlag.Mselemente.SELEN)+"</selen></mselemente>";
 		return m;
 	}
 
@@ -171,52 +178,134 @@ public class DataHandler {
 		return n;
 	}
 
-	public String getResults(ItemPublishEvent items) {
-		Pattern tageszeit = Pattern.compile("tageszeit=\"morgens\">");
-		Pattern gewicht = Pattern.compile("gewicht=\"150\">");
-		Pattern name = Pattern.compile("Banane</name>");
-		Pattern kalorien = Pattern.compile("95,0</kalorien>");
-		Pattern flussigkeit = Pattern.compile("2,0</fluessigkeit>");
-		
-		Pattern vitamina = Pattern.compile("0,8</vitamina>");
-		Pattern vitamind = Pattern.compile("0,8</vitamind>");
-		Pattern vitamine = Pattern.compile("0,8</vitamine>");
-		Pattern vitaminb1 = Pattern.compile("0,8</vitaminb1>");
-		Pattern vitaminb2 = Pattern.compile("0,8</vitaminb2>");
-		Pattern vitaminb6 = Pattern.compile("0,8</vitaminb6>");
-		Pattern vitaminb12 = Pattern.compile("0,8</vitaminb12>");
-		Pattern vitaminc = Pattern.compile("0,8</vitaminc>");
-		Pattern niacin = Pattern.compile("0,8</niacin>");
-		Pattern folsaure = Pattern.compile("400,0</folsaeure>");
-		
-		Pattern magnesium = Pattern.compile("300,0</magnesium>");
-		Pattern eisen = Pattern.compile("300,0</eisen>");
-		Pattern calcium = Pattern.compile("300,0</calcium>");
-		Pattern jod = Pattern.compile("300,0</jod>");
-		Pattern flourid = Pattern.compile("300,0</flourid>");
-		Pattern zink = Pattern.compile("300,0</zink>");
-		Pattern selen = Pattern.compile("300,0</selen>");
-		
-		Pattern eiweiss = Pattern.compile("57,0</eiweiss>");
-		Pattern fette = Pattern.compile("57,0</fette>");
-		Pattern kohlehydrate = Pattern.compile("57,0</kohlenhydrate>");
-		
-		
-        Matcher ma = tageszeit.matcher(items.getItems().toString());
-        String geschlecht = null;
+	/**
+	 * 
+	 * @param items
+	 * @return
+	 */
+	public String getResultTag(String items) {
+		Pattern pat = Pattern.compile("tageszeit=\"[\\w]+");
+		Matcher ma = pat.matcher(items);
+		String result = null;
+        
+		if (ma.find()) {
+            String[] ja = ma.group().split("tageszeit=\"");
+            for (String r : ja) {
+            	result = r;
+            }
+        }
+        else {
+        	System.out.println("passt nischt");
+        }
+        return result;
+	}
+	
+	/**
+	 * 
+	 * @param items
+	 * @return
+	 */
+	public String getResultGewicht(String items) {
+		Pattern pat = Pattern.compile("gewicht=\"[\\d]+");
+		Matcher ma = pat.matcher(items);
+        String result = null;
         
         if (ma.find()) {
-            String[] result = ma.group().split("</geschlecht>");
-            for (String r : result) {
-            	geschlecht = r;
+            String[] ja = ma.group().split("gewicht=\"");
+            for (String r : ja) {
+            	result = r;
             }
-            // Control output
-            System.out.println(items.getItems().toString());
         }
-        else
-        	System.out.println("Nööööööööööööööö, passt nischt");
+        else {
+        	System.out.println("passt nischt");
+        }
+        return result;
+	}
+	
+	/**
+	 * 
+	 * @param items
+	 * @return
+	 */
+	public String getResultName(String items) {
+		Pattern pat = Pattern.compile("[\\w]+</name>");
+		Matcher ma = pat.matcher(items);
+        String result = null;
+        
+        if (ma.find()) {
+            String[] ja = ma.group().split("</name>");
+            for (String r : ja) {
+            	result = r;
+            }
+        }
+        else {
+        	System.out.println("passt nischt");
+        }
+        return result;
+	}
+	
+	/**
+	 * 
+	 * @param items
+	 */
+	public void getResults(String items) {
+		Pattern kalorien, flussigkeit, vitamina, vitamind, vitamine, vitaminb1, vitaminb2, vitaminb6, vitaminb12, vitaminc, niacin, folsaure, magnesium, eisen, calcium, jod, fluorid, zink, selen, eiweiss, fette, kohlehydrate;
 		
-        return geschlecht;
+		kalorien = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</kalorien>");
+		flussigkeit = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</fluessigkeit>");
+		
+		vitamina = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitamina>");
+		vitamind = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitamind>");
+		vitamine = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitamine>");
+		vitaminb1 = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitaminb1>");
+		vitaminb2 = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitaminb2>");
+		vitaminb6 = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitaminb6>");
+		vitaminb12 = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitaminb12>");
+		vitaminc = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitaminc>");
+		niacin = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</niacin>");
+		folsaure = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</folsaeure>");
+		
+		magnesium = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</magnesium>");
+		eisen = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</eisen>");
+		calcium = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</calcium>");
+		jod = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</jod>");
+		fluorid = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</fluorid>");
+		zink = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</zink>");
+		selen = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</selen>");
+		
+		eiweiss = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</eiweiss>");
+		fette = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</fette>");
+		kohlehydrate = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</kohlenhydrate>");
+		
+		String[] regExp = {"kalorien", "fluessigkeit", 
+				"eiweiss", "fette", "kohlenhydrate",
+				"magnesium", "eisen", "calcium", "jod", "fluorid", "zink", "selen",
+				"vitamina", "vitamind", "vitamine", "vitaminb1", "vitaminb2", "vitaminb6", "vitaminb12", "vitaminc", "niacin", "folsaeure"};
+		
+		
+		
+		Hashtable<String, Pattern> table = new Hashtable<String, Pattern>();
+		 table.put("kalorien", kalorien); table.put("fluessigkeit", flussigkeit); table.put("eiweiss", eiweiss); table.put("fette", fette); table.put("kohlenhydrate", kohlehydrate); 
+		 table.put("magnesium", magnesium); table.put("eisen", eisen); table.put("calcium", calcium); table.put("jod", jod); table.put("fluorid", fluorid); 
+		 table.put("zink", zink); table.put("selen", selen); table.put("vitamina", vitamina); table.put("vitamind", vitamind); table.put("vitamine", vitamine); 
+		 table.put("vitaminb1", vitaminb1); table.put("vitaminb2", vitaminb2); table.put("vitaminb6", vitaminb6); table.put("vitaminb12", vitaminb12); table.put("vitaminc", vitaminc); 
+		 table.put("niacin", niacin); table.put("folsaeure", folsaure);
+		
+		
+		
+		for (int i = 0; i <= regExp.length-1; i++) {
+			Matcher ma = table.get(regExp[i]).matcher(items);
+		    if (ma.find()) {
+		        String[] wert = ma.group().split("</"+regExp[i]+">");
+		        for (String r : wert) {
+		        	String result = r;
+		        	System.out.println(regExp[i] + ": " + result);
+		        }
+	        }
+	        else
+	        	System.out.println("ung�ltig");
+			}
+		
 	} 
 	
 }

@@ -4,6 +4,8 @@ import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 
+import com.healthylicous.connection.data.DataHandler;
+
 public class Subscriber {
 	public static final String TOPIC = "Topic";
 	private static final String USER = "sue";
@@ -22,16 +24,24 @@ public class Subscriber {
 			if(con.isConnected()){
 				System.out.println("Connection Success!!");
 			}
-			con.listener(TOPIC);
 			con.subscribe(con.getUser(), TOPIC);
-			con.discoItems(TOPIC);
-			con.getChildElXML(TOPIC);
-			con.deListener(TOPIC);
-			con.getItem(TOPIC);
+			con.listener(TOPIC);
+//			con.discoItems(TOPIC);
+//			con.getChildElXML(TOPIC);
+//			con.deListener(TOPIC);
+			
+			DataHandler data = new DataHandler();
+			System.out.println(data.getResultTag(con.getItem(TOPIC)));
+			System.out.println(data.getResultGewicht(con.getItem(TOPIC)));
+			System.out.println(data.getResultName(con.getItem(TOPIC)));
+			data.getResults(con.getItem(TOPIC));
+			System.out.println(con.getItem(TOPIC));
 //			con.getPersistedItems(TOPIC);
-			con.getCurrentItems(TOPIC);
+//			con.getCurrentItems(TOPIC);
 //			con.getAffiliation(TOPIC);
 			con.unSubscribe(con.getUser(), TOPIC);
+			
+	
 
 		} catch (XMPPException e) {
 			e.printStackTrace();

@@ -177,10 +177,11 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void getItem(String topicID) throws XMPPException {
+	public String getItem(String topicID) throws XMPPException {
 		 int index = getNode(topicID).getSubscriptions().size()-1;
 		 String sub = getNode(topicID).getSubscriptions().get(index).getId();
-		 System.out.println("Items von ("+ sub +"): " + ((LeafNode)getNode(topicID)).getItems(sub));
+//		 System.out.println("Items von ("+ sub +"): " + ((LeafNode)getNode(topicID)).getItems(sub));
+		return ((LeafNode)getNode(topicID)).getItems(sub).toString();
 	}
 	
 	/**

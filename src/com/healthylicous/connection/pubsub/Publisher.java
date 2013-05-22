@@ -28,11 +28,11 @@ public class Publisher {
 			}
 			
 //			handler.createTopic(TOPIC);
-			handler.discoverNodes(TOPIC);
+//			handler.discoverNodes(TOPIC);
 //			handler.getAffiliation(TOPIC);
 //			handler.delAllItems(TOPIC);
-//			handler.publishPayload(TOPIC, new DataHandler().setResult());
-			handler.getItem(TOPIC);
+			handler.publishPayload(TOPIC, new DataHandler().setResult());
+//			handler.getItem(TOPIC);
 			
 			
 			while(true){

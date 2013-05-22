@@ -11,7 +11,7 @@ public class Vorschlag {
 	}
 	
 	public enum Mselemente {
-		MAGNESIUM, CALCIUM, EISEN, JOD, FLOURID, ZINK, SELEN
+		MAGNESIUM, CALCIUM, EISEN, JOD, FLUORID, ZINK, SELEN
 	}
 	
 	public enum Vitamine {
@@ -74,7 +74,7 @@ public class Vorschlag {
 	    case JOD:
 			result = "300";
 			break;
-	    case FLOURID:
+	    case FLUORID:
 			result = "300";
 			break;	
 	    case ZINK:
