@@ -30,8 +30,8 @@ public class Subscriber {
 			con.getItem(TOPIC);
 //			con.getPersistedItems(TOPIC);
 			con.getCurrentItems(TOPIC);
-			con.getAffiliation(TOPIC);
-//			con.unSubscribe(con.getUser(), TOPIC);
+//			con.getAffiliation(TOPIC);
+			con.unSubscribe(con.getUser(), TOPIC);
 
 		} catch (XMPPException e) {
 			e.printStackTrace();

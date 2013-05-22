@@ -172,23 +172,15 @@ public class PubSubHandler extends XMPPConnection{
 		}
 	}
 	
-//	Nur direkt nach Topic Erstellung anwendbar, ansonsten tritt folgende Fehlerausgabe auf:	
-//	kann nur ersten index zeigen
-//	org.jivesoftware.smack.packet.DefaultPacketExtension cannot be cast to org.jivesoftware.smackx.pubsub.Item
-	public void getItems(String topicID) throws XMPPException {
-		 Iterable<Item> disco = ((LeafNode)getNode(topicID)).getItems();
-		 for (Item i : disco) {
-	        System.out.println("ItemsResult: " + i.toString());
-		 }
-	}
-	
+	/**
+	 * Get Items of the last subscriber
+	 * @param topicID
+	 * @throws XMPPException
+	 */
 	public void getItem(String topicID) throws XMPPException {
 		 int index = getNode(topicID).getSubscriptions().size()-1;
 		 String sub = getNode(topicID).getSubscriptions().get(index).getId();
-		 Iterable<Item> disco = ((LeafNode)getNode(topicID)).getItems(sub);
-		 for (Item i : disco) {
-	        System.out.println("ItemsResult: " + i.toString());
-		 }
+		 System.out.println("Items von ("+ sub +"): " + ((LeafNode)getNode(topicID)).getItems(sub));
 	}
 	
 	/**
@@ -200,7 +192,7 @@ public class PubSubHandler extends XMPPConnection{
 		Iterable<Subscription> id = (Iterable<Subscription>) getNode(topicID).getSubscriptions();
 		for (Subscription i : id) {
 			System.out.println("SubscriptionID: " + i.getId());
-			System.out.println("ItemResult: " + ((LeafNode)getNode(topicID)).getItems(4, i.getId()));
+			System.out.println("ItemResult: " + ((LeafNode)getNode(topicID)).getItems(i.getId()));
 		}
 	}
 	
