@@ -8,9 +8,11 @@ import org.jivesoftware.smack.XMPPException;
 import com.healthylicous.connection.data.DataHandler;
 
 public class Publisher {
-	public static final String TOPIC = "Topic";
+	public static final String TOPIC = "Vorschlag";
 	private static final String USER = "admin";
 	private static final String PASSWORD = "openfire";
+	
+	static String newTopic = null;
 	
 	/**
 	 * @param args
@@ -27,28 +29,38 @@ public class Publisher {
 				System.out.println("Connection Success!!");
 			}
 			
-//			handler.createTopic(TOPIC);
 //			handler.discoverNodes(TOPIC);
-//			handler.getAffiliation(TOPIC);
 //			handler.delAllItems(TOPIC);
 			
 //			handler.getItem(TOPIC);
 			
 			while(true){
 				Scanner scan = new Scanner(System.in);
-				System.out.println("Wähle r oder k");
+				System.out.println("Wähle (r)esult, (d)elete, (c)reate oder set (k)alorie");
 				String input = scan.next();
 				if (input.matches("r")) {
 					handler.publishPayload(TOPIC, new DataHandler().setResult());
-				break;
 				}
 				else if(input.matches("k")){
 					System.out.println("Titel eingeben: ");
 					handler.publishPayload(TOPIC, new DataHandler().setKalories(input));
 				}
+				else if(input.matches("d")){
+					System.out.println("Node eingeben: ");
+					String del = scan.next();
+					handler.getAffiliation(del);
+					handler.discoverNodes(del);
+					handler.deleteTopic(del);
+				}
+				else if(input.matches("c")){
+					System.out.println("Node eingeben: ");
+					newTopic = scan.next();
+					handler.createTopic(newTopic);
+					handler.discoverNodes(newTopic);
+				}
 				else
 					System.exit(0);
-//				handler.deleteTopic(input);
+				
 			}
 		} catch (XMPPException e) {
 			e.printStackTrace();

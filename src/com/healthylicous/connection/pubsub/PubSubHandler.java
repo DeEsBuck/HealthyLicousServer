@@ -126,8 +126,8 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void getTopicID(String topicID) throws XMPPException{
-		System.out.println(getNode(topicID).getId());
+	public String getTopicID(String topicID) throws XMPPException{
+		return getNode(topicID).getId();
 	}
 	
 	/**

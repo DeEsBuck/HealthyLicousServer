@@ -7,8 +7,9 @@ import org.jivesoftware.smack.XMPPException;
 import com.healthylicous.connection.data.DataHandler;
 
 public class Subscriber {
-	public static final String TOPIC = "Topic";
-	private static final String USER = "sue";
+	public static final String TOPIC = "Vorschlag";
+	public static final String TOPIC1 = "Profil";
+	private static final String USER = "android";
 	private static final String PASSWORD = "openfire";
 	
 	/**
@@ -25,21 +26,25 @@ public class Subscriber {
 				System.out.println("Connection Success!!");
 			}
 			con.subscribe(con.getUser(), TOPIC);
+//			con.subscribe(con.getUser(), TOPIC1);
 			con.listener(TOPIC);
+//			con.listener(TOPIC1);
 //			con.discoItems(TOPIC);
 //			con.getChildElXML(TOPIC);
 //			con.deListener(TOPIC);
 			
-			DataHandler data = new DataHandler();
+//			DataHandler data = new DataHandler();
 //			System.out.println(data.getResultTag(con.getItem(TOPIC)));
 //			System.out.println(data.getResultGewicht(con.getItem(TOPIC)));
 //			System.out.println(data.getResultName(con.getItem(TOPIC)));
 //			data.getResults(con.getItem(TOPIC));
 			System.out.println(con.getItem(TOPIC));
+//			System.out.println(con.getItem(TOPIC1));
 //			con.getPersistedItems(TOPIC);
 //			con.getCurrentItems(TOPIC);
 //			con.getAffiliation(TOPIC);
-			con.unSubscribe(con.getUser(), TOPIC);
+//			con.unSubscribe(con.getUser(), TOPIC);
+//			con.unSubscribe(con.getUser(), TOPIC1);
 			
 	
 
