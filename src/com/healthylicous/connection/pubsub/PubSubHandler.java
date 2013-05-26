@@ -1,13 +1,8 @@
 package com.healthylicous.connection.pubsub;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.packet.PacketExtension;
 import org.jivesoftware.smackx.packet.DiscoverItems;
 import org.jivesoftware.smackx.pubsub.AccessModel;
 import org.jivesoftware.smackx.pubsub.Affiliation;
@@ -19,9 +14,7 @@ import org.jivesoftware.smackx.pubsub.Node;
 import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.PublishModel;
-import org.jivesoftware.smackx.pubsub.SimplePayload;
 import org.jivesoftware.smackx.pubsub.Subscription;
-import org.jivesoftware.smackx.pubsub.provider.ItemProvider;
 
 public class PubSubHandler extends XMPPConnection{
 	private static final String HOST = "Asus";
@@ -177,11 +170,34 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
+	public String getThisSubscriber(String topicID) throws XMPPException {
+		 String sub = null;
+		 if (getNode(topicID).getSubscriptions().isEmpty()){
+			 System.out.println("keine Subscriber");
+		 }
+		 else {
+			 int index = getNode(topicID).getSubscriptions().size()-1;
+			 sub = getNode(topicID).getSubscriptions().get(index).getId();
+		 }
+		 return sub;		
+	}
+	
+	/**
+	 * Get Items of the last subscriber
+	 * @param topicID
+	 * @throws XMPPException
+	 */
 	public String getItem(String topicID) throws XMPPException {
-		 int index = getNode(topicID).getSubscriptions().size()-1;
-		 String sub = getNode(topicID).getSubscriptions().get(index).getId();
-//		 System.out.println("Items von ("+ sub +"): " + ((LeafNode)getNode(topicID)).getItems(sub));
-		return ((LeafNode)getNode(topicID)).getItems(sub).toString();
+		 String give = null;
+		 if (getNode(topicID).getSubscriptions().isEmpty()){
+			 System.out.println("keine Subscriber");
+		 }
+		 else {
+			 int index = getNode(topicID).getSubscriptions().size()-1;
+			 String sub = getNode(topicID).getSubscriptions().get(index).getId();
+			 give = ((LeafNode)getNode(topicID)).getItems(sub).toString();
+		 }
+		 return give;		
 	}
 	
 	/**
@@ -195,6 +211,22 @@ public class PubSubHandler extends XMPPConnection{
 			System.out.println("SubscriptionID: " + i.getId());
 			System.out.println("ItemResult: " + ((LeafNode)getNode(topicID)).getItems(i.getId()));
 		}
+	}
+	
+	/**
+	 * Get the subscriptions currently associated with this node.
+	 * @param topicID
+	 * @return 
+	 * @throws XMPPException
+	 */
+	public String getSubscriptions(String topicID) throws XMPPException {
+		Iterable<Subscription> id = (Iterable<Subscription>) getNode(topicID).getSubscriptions();
+		String subs = null;
+		for (Subscription i : id) {
+			subs = i.getId();
+//			System.out.println("SubscriptionID: " + i.getId());
+		}
+		return subs;
 	}
 	
 	/**

@@ -15,14 +15,32 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
         System.out.println(items.getItems().toString());
         System.out.println(items.getPublishedDate());
         
-        
-        System.out.println(new DataHandler().getResultTag(items.getItems().toString()));
-        System.out.println(new DataHandler().getResultGewicht(items.getItems().toString()));
-        System.out.println(new DataHandler().getResultName(items.getItems().toString()));
-        new DataHandler().getResults(items.getItems().toString());
-        
-//        System.out.println(new DataHandler().getKalories(items));
-        
+        if (items.getNodeId().contains("Vorschlag")) {
+        	if (items.getItems().isEmpty()) {
+        		System.out.println("Keine Items");
+        	}
+        	else {
+		        System.out.println(new DataHandler().getResultTag(items.getItems().toString()));
+		        System.out.println(new DataHandler().getResultGewicht(items.getItems().toString()));
+		        System.out.println(new DataHandler().getResultName(items.getItems().toString()));
+		        String[] wert = new DataHandler().getResults(items.getItems().toString());
+//				for (String s : wert) {
+//					System.out.println(s);
+//				}
+				String vitamin = wert[4];
+				System.out.println("Ein Vitamin: "+vitamin);
+        	}
+        }
+        else if(items.getNodeId().contains("Profile")) {
+	        System.out.println(new DataHandler().getProfileAlter(items));
+	        System.out.println(new DataHandler().getProfileGeschlecht(items));
+	        System.out.println(new DataHandler().getProfileGewicht(items));
+	        System.out.println(new DataHandler().getProfileGroesse(items));
+        }
+        else if(items.getNodeId().contains("Kalories")) {
+        	System.out.println(new DataHandler().getKalories(items));
+        }
+        else System.exit(1);
         
 //        System.out.println(items.getNodeId());
         System.out.println("Subscriptions: " + items.getSubscriptions());

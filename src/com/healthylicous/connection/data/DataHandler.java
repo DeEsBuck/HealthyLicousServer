@@ -195,7 +195,7 @@ public class DataHandler {
             }
         }
         else {
-        	System.out.println("passt nischt");
+        	System.out.println("kein Eintrag");
         }
         return result;
 	}
@@ -217,7 +217,7 @@ public class DataHandler {
             }
         }
         else {
-        	System.out.println("passt nischt");
+        	System.out.println("kein Eintrag");
         }
         return result;
 	}
@@ -239,7 +239,7 @@ public class DataHandler {
             }
         }
         else {
-        	System.out.println("passt nischt");
+        	System.out.println("kein Eintrag");
         }
         return result;
 	}
@@ -247,13 +247,14 @@ public class DataHandler {
 	/**
 	 * 
 	 * @param items
+	 * @return
 	 */
-	public void getResults(String items) {
+	public String[] getResults(String items) {
 		Pattern kalorien, flussigkeit, vitamina, vitamind, vitamine, vitaminb1, vitaminb2, vitaminb6, vitaminb12, vitaminc, niacin, folsaure, magnesium, eisen, calcium, jod, fluorid, zink, selen, eiweiss, fette, kohlehydrate;
-		
+
 		kalorien = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</kalorien>");
 		flussigkeit = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</fluessigkeit>");
-		
+
 		vitamina = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitamina>");
 		vitamind = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitamind>");
 		vitamine = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitamine>");
@@ -264,7 +265,7 @@ public class DataHandler {
 		vitaminc = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitaminc>");
 		niacin = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</niacin>");
 		folsaure = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</folsaeure>");
-		
+
 		magnesium = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</magnesium>");
 		eisen = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</eisen>");
 		calcium = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</calcium>");
@@ -272,40 +273,56 @@ public class DataHandler {
 		fluorid = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</fluorid>");
 		zink = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</zink>");
 		selen = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</selen>");
-		
+
 		eiweiss = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</eiweiss>");
 		fette = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</fette>");
 		kohlehydrate = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</kohlenhydrate>");
-		
-		String[] regExp = {"kalorien", "fluessigkeit", 
-				"eiweiss", "fette", "kohlenhydrate",
-				"magnesium", "eisen", "calcium", "jod", "fluorid", "zink", "selen",
-				"vitamina", "vitamind", "vitamine", "vitaminb1", "vitaminb2", "vitaminb6", "vitaminb12", "vitaminc", "niacin", "folsaeure"};
-		
-		
-		
+
+		String[] regExp = { "kalorien", "fluessigkeit", "eiweiss", "fette",
+				"kohlenhydrate", "magnesium", "eisen", "calcium", "jod",
+				"fluorid", "zink", "selen", "vitamina", "vitamind", "vitamine",
+				"vitaminb1", "vitaminb2", "vitaminb6", "vitaminb12",
+				"vitaminc", "niacin", "folsaeure" };
+
 		Hashtable<String, Pattern> table = new Hashtable<String, Pattern>();
-		 table.put("kalorien", kalorien); table.put("fluessigkeit", flussigkeit); table.put("eiweiss", eiweiss); table.put("fette", fette); table.put("kohlenhydrate", kohlehydrate); 
-		 table.put("magnesium", magnesium); table.put("eisen", eisen); table.put("calcium", calcium); table.put("jod", jod); table.put("fluorid", fluorid); 
-		 table.put("zink", zink); table.put("selen", selen); table.put("vitamina", vitamina); table.put("vitamind", vitamind); table.put("vitamine", vitamine); 
-		 table.put("vitaminb1", vitaminb1); table.put("vitaminb2", vitaminb2); table.put("vitaminb6", vitaminb6); table.put("vitaminb12", vitaminb12); table.put("vitaminc", vitaminc); 
-		 table.put("niacin", niacin); table.put("folsaeure", folsaure);
+		table.put("kalorien", kalorien);
+		table.put("fluessigkeit", flussigkeit);
+		table.put("eiweiss", eiweiss);
+		table.put("fette", fette);
+		table.put("kohlenhydrate", kohlehydrate);
+		table.put("magnesium", magnesium);
+		table.put("eisen", eisen);
+		table.put("calcium", calcium);
+		table.put("jod", jod);
+		table.put("fluorid", fluorid);
+		table.put("zink", zink);
+		table.put("selen", selen);
+		table.put("vitamina", vitamina);
+		table.put("vitamind", vitamind);
+		table.put("vitamine", vitamine);
+		table.put("vitaminb1", vitaminb1);
+		table.put("vitaminb2", vitaminb2);
+		table.put("vitaminb6", vitaminb6);
+		table.put("vitaminb12", vitaminb12);
+		table.put("vitaminc", vitaminc);
+		table.put("niacin", niacin);
+		table.put("folsaeure", folsaure);
+
+		String[] werteListe = new String[regExp.length];
 		
-		
-		
-		for (int i = 0; i <= regExp.length-1; i++) {
+		for (int i = 0; i <= regExp.length - 1; i++) {
 			Matcher ma = table.get(regExp[i]).matcher(items);
-		    if (ma.find()) {
-		        String[] wert = ma.group().split("</"+regExp[i]+">");
-		        for (String r : wert) {
-		        	String result = r;
-		        	System.out.println(regExp[i] + ": " + result);
-		        }
-	        }
-	        else
-	        	System.out.println("ungültig");
-			}
-		
+			if (ma.find()) {
+				String[] wert = ma.group().split("</" + regExp[i] + ">");
+				for (String r : wert) {
+					werteListe[i] = r;
+//					System.out.println(regExp[i] + ": " + result);
+				}
+			} else
+				System.out.println("kein Eintrag");
+		}
+
+		return werteListe;
 	} 
 	
 }

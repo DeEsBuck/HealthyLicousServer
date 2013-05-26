@@ -36,14 +36,15 @@ public class Publisher {
 			
 			while(true){
 				Scanner scan = new Scanner(System.in);
-				System.out.println("Wähle (r)esult, (d)elete, (c)reate oder set (k)alorie");
+				System.out.println("Wähle (r)esult, (d)elete, (w)hois, (c)reate, delete (a)ll Items oder set (k)alorie");
 				String input = scan.next();
 				if (input.matches("r")) {
-					handler.publishPayload(TOPIC, new DataHandler().setResult());
+					handler.publishPayload("Vorschlag", new DataHandler().setResult());
 				}
 				else if(input.matches("k")){
 					System.out.println("Titel eingeben: ");
-					handler.publishPayload(TOPIC, new DataHandler().setKalories(input));
+					String kal = scan.next();
+					handler.publishPayload("Kalories", new DataHandler().setKalories(kal));
 				}
 				else if(input.matches("d")){
 					System.out.println("Node eingeben: ");
@@ -52,14 +53,37 @@ public class Publisher {
 					handler.discoverNodes(del);
 					handler.deleteTopic(del);
 				}
+				else if(input.matches("a")){
+					System.out.println("Node eingeben: ");
+					String del = scan.next();
+					handler.getAffiliation(del);
+					handler.discoverNodes(del);
+					handler.delAllItems(del);
+				}
 				else if(input.matches("c")){
 					System.out.println("Node eingeben: ");
 					newTopic = scan.next();
 					handler.createTopic(newTopic);
 					handler.discoverNodes(newTopic);
 				}
+				else if(input.matches("g")){
+					System.out.println("Node eingeben: ");
+					String get = scan.next();
+					handler.getTopicID(get);
+				}
+				else if(input.matches("w")){
+					System.out.println("Node eingeben: ");
+					String get = scan.next();
+					System.out.println("TopicId: "+handler.getTopicID(get));
+					handler.discoItems(get);
+					handler.getChildElXML(get);
+					System.out.println("Service: "+handler.getServiceName());
+					handler.discoverNodes(get);
+					handler.getItem(get);
+					handler.getSubscriptions(get);
+				}
 				else
-					System.exit(0);
+					System.exit(1);
 				
 			}
 		} catch (XMPPException e) {
