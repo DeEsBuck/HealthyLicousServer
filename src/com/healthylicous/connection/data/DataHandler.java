@@ -142,12 +142,20 @@ public class DataHandler {
         return geschlecht;
 	}
 	
+	public PayloadItem setResult() {
+		String itemId = "2";
+		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result'>"+setVorschlag(itemId)+"</result>");
+		PayloadItem payloaditem = new PayloadItem(null, payload);
+		return payloaditem;
+		
+	}
+	
 	/**
 	 * 
 	 * @return
 	 */
-	public PayloadItem setResult() {
-		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result'>"+setVorschlag("1")+"</result>");
+	public PayloadItem setResult(String itemId) {
+		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result'>"+setVorschlag(itemId)+"</result>");
 		PayloadItem payloaditem = new PayloadItem(null, payload);
 		return payloaditem;
 		
@@ -158,8 +166,8 @@ public class DataHandler {
 	 * @param index
 	 * @return
 	 */
-	public String setVorschlag(String index) {
-		String s = "<vorschlag  id='"+index+"' tageszeit='"+Vorschlag.head(Vorschlag.Head.TAGESZEIT)+"'><name metric='g' gewicht='"+Vorschlag.head(Vorschlag.Head.GEWICHT)+"'>"+Vorschlag.head(Vorschlag.Head.NAME)+"</name><kalorien metric='kcal'>"+Vorschlag.head(Vorschlag.Head.KALORIEN)+"</kalorien><fluessigkeit metric='l'>"+Vorschlag.head(Vorschlag.Head.FLUESSIGKEIT)+"</fluessigkeit>"+naehrstoffe()+mselemente()+vitamine()+"</vorschlag>";
+	public String setVorschlag(String itemId) {
+		String s = "<vorschlag  id='"+itemId+"' tageszeit='"+Vorschlag.head(Vorschlag.Head.TAGESZEIT)+"'><name metric='g' gewicht='"+Vorschlag.head(Vorschlag.Head.GEWICHT)+"'>"+Vorschlag.head(Vorschlag.Head.NAME)+"</name><kalorien metric='kcal'>"+Vorschlag.head(Vorschlag.Head.KALORIEN)+"</kalorien><fluessigkeit metric='l'>"+Vorschlag.head(Vorschlag.Head.FLUESSIGKEIT)+"</fluessigkeit>"+naehrstoffe()+mselemente()+vitamine()+"</vorschlag>";
 		return s;
 	}
 	
@@ -183,6 +191,28 @@ public class DataHandler {
 	 * @param items
 	 * @return
 	 */
+	public String getResultID(String items) {
+		Pattern pat = Pattern.compile("id=\"[a-z0-9-]*");
+		Matcher ma = pat.matcher(items);
+		String result = null;
+        
+		while (ma.find()) {
+            String[] ja = ma.group().split("id=\"");
+            for (String r : ja) {
+            	result = r;
+            }
+        }
+//        else {
+//        	System.out.println("kein Eintrag");
+//        }
+        return result;
+	}
+	
+	/**
+	 * 
+	 * @param items
+	 * @return
+	 */
 	public String getResultTag(String items) {
 		Pattern pat = Pattern.compile("tageszeit=\"[\\w]+");
 		Matcher ma = pat.matcher(items);
@@ -194,9 +224,9 @@ public class DataHandler {
             	result = r;
             }
         }
-        else {
-        	System.out.println("kein Eintrag");
-        }
+//        else {
+//        	System.out.println("kein Eintrag");
+//        }
         return result;
 	}
 	
@@ -216,9 +246,9 @@ public class DataHandler {
             	result = r;
             }
         }
-        else {
-        	System.out.println("kein Eintrag");
-        }
+//        else {
+//        	System.out.println("kein Eintrag");
+//        }
         return result;
 	}
 	
@@ -238,9 +268,9 @@ public class DataHandler {
             	result = r;
             }
         }
-        else {
-        	System.out.println("kein Eintrag");
-        }
+//        else {
+//        	System.out.println("kein Eintrag");
+//        }
         return result;
 	}
 	
@@ -318,8 +348,9 @@ public class DataHandler {
 					werteListe[i] = r;
 //					System.out.println(regExp[i] + ": " + result);
 				}
-			} else
-				System.out.println("kein Eintrag");
+			}
+//			else
+//				System.out.println("kein Eintrag");
 		}
 
 		return werteListe;

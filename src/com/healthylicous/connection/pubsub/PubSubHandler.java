@@ -1,5 +1,11 @@
 package com.healthylicous.connection.pubsub;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
@@ -16,11 +22,12 @@ import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.PublishModel;
 import org.jivesoftware.smackx.pubsub.Subscription;
 
+
 public class PubSubHandler extends XMPPConnection{
 	private static final String HOST = "Asus";
 	private static final int PORT = 5222;
 	
-	static String host;
+	String topicID;
 	static ConnectionConfiguration config = new ConnectionConfiguration(HOST,PORT);
 	
 	/**
@@ -29,6 +36,11 @@ public class PubSubHandler extends XMPPConnection{
 	 */
 	public PubSubHandler() throws XMPPException {
 		super(config);
+	}
+	
+	public PubSubHandler(String topicID) throws XMPPException {
+		super(config);
+		this.topicID = topicID;
 	}
 
 	/**
@@ -144,12 +156,13 @@ public class PubSubHandler extends XMPPConnection{
 	/**
 	 * 
 	 * @param topicID
+	 * @return 
 	 * @throws XMPPException
 	 */
-	public void discoItems(String topicID) throws XMPPException {
+	public String discoItems(String topicID) throws XMPPException {
 		DiscoverItems disco = ((LeafNode)getNode(topicID)).discoverItems();
-		System.out.println("DiscoResult: " + disco.toXML());
-		//RegExp??
+//		System.out.println("DiscoResult: " + disco.toXML());
+		return disco.toXML();
 	}
 	
 	/**
@@ -166,7 +179,7 @@ public class PubSubHandler extends XMPPConnection{
 	}
 	
 	/**
-	 * Get Items of the last subscriber
+	 * Get the last subscriber
 	 * @param topicID
 	 * @throws XMPPException
 	 */
@@ -198,6 +211,56 @@ public class PubSubHandler extends XMPPConnection{
 			 give = ((LeafNode)getNode(topicID)).getItems(sub).toString();
 		 }
 		 return give;		
+	}
+	
+	/**
+	 * Only use, if only one, the first Item exists, else ClassCastException.
+	 * @param topicID
+	 * @return
+	 * @throws XMPPException
+	 */
+	public String getFirstItemId(String topicID) throws XMPPException {
+		String give = null;
+		Collection<PayloadItem> item = ((LeafNode)getNode(topicID)).getItems(); 
+		Iterator<PayloadItem> s = item.iterator();
+		give = s.next().getId();		
+		return give;	
+	}
+	
+	/**
+	 * Results only the last ItemID in Topic
+	 * @param topicID
+	 * @return
+	 * @throws XMPPException
+	 */
+	public String getLastItemId(String topicID) throws XMPPException {
+		Pattern regExp = Pattern.compile("name=\"[a-z0-9-]*");
+		String give = this.discoItems(topicID);
+		String result = null;
+		Matcher ma = regExp.matcher(give);
+	    while (ma.find()) {
+	    	result = ma.group();
+	        String[] ja = ma.group().split("name=\"");
+	        for (String r : ja) {
+	         	result = r;
+	        }
+	    }
+		return result;	
+	}
+	
+	public String getItemId(String topicID) throws XMPPException {
+		Pattern regExp = Pattern.compile("<item id='[a-z0-9]*");
+		String give = this.getItem(topicID);
+		String result = null;
+		Matcher ma = regExp.matcher(give);
+	    while (ma.find()) {
+	    	result = ma.group();
+	        String[] ja = ma.group().split("<item id='");
+	        for (String r : ja) {
+	         	result = r;
+	        }
+	    }
+		return result;	
 	}
 	
 	/**

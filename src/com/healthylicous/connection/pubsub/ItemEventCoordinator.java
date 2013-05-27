@@ -1,4 +1,5 @@
 package com.healthylicous.connection.pubsub;
+import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
@@ -24,26 +25,37 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 		        System.out.println(new DataHandler().getResultGewicht(items.getItems().toString()));
 		        System.out.println(new DataHandler().getResultName(items.getItems().toString()));
 		        String[] wert = new DataHandler().getResults(items.getItems().toString());
-//				for (String s : wert) {
-//					System.out.println(s);
-//				}
-				String vitamin = wert[4];
-				System.out.println("Ein Vitamin: "+vitamin);
+				for (String s : wert) {
+					System.out.println(s);
+				}
+				
+//				String vitamin = wert[4];
+//				System.out.println("Ein Vitamin: "+vitamin);
         	}
         }
         else if(items.getNodeId().contains("Profile")) {
-	        System.out.println(new DataHandler().getProfileAlter(items));
-	        System.out.println(new DataHandler().getProfileGeschlecht(items));
-	        System.out.println(new DataHandler().getProfileGewicht(items));
-	        System.out.println(new DataHandler().getProfileGroesse(items));
+        	if (items.getItems().isEmpty()) {
+        		System.out.println("Keine Items");
+        	}
+        	else {
+		        System.out.println(new DataHandler().getProfileAlter(items));
+		        System.out.println(new DataHandler().getProfileGeschlecht(items));
+		        System.out.println(new DataHandler().getProfileGewicht(items));
+		        System.out.println(new DataHandler().getProfileGroesse(items));
+        	}
         }
         else if(items.getNodeId().contains("Kalories")) {
-        	System.out.println(new DataHandler().getKalories(items));
+        	if (items.getItems().isEmpty()) {
+        		System.out.println("Keine Items");
+        	}
+        	else {
+        		System.out.println(new DataHandler().getKalories(items));
+        	}
         }
         else System.exit(1);
         
 //        System.out.println(items.getNodeId());
-        System.out.println("Subscriptions: " + items.getSubscriptions());
+//        System.out.println("Subscriptions: " + items.getSubscriptions());
         
 	}
 

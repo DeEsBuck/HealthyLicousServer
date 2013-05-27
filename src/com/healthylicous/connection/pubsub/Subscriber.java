@@ -42,9 +42,8 @@ public class Subscriber {
 					System.out.println("Node wählen:");
 					String sub = scan.next();
 					con.getChildElXML(sub);
-					System.out.println(con.getItem(sub));
+					System.out.println("getItem: "+con.getItem(sub));
 					con.getCurrentItems(sub);
-					System.out.println(con.getItem(sub));
 					System.out.println(con.getThisSubscriber(sub));
 				}
 				else if (input.matches("v")) {
@@ -52,15 +51,21 @@ public class Subscriber {
 						System.out.println("Nix da");
 					} 
 					else {
-						System.out.println(data.getResultTag(con.getItem(TOPIC)));
-						System.out.println(data.getResultGewicht(con.getItem(TOPIC)));
-						System.out.println(data.getResultName(con.getItem(TOPIC)));
-						String[] wert = data.getResults(con.getItem(TOPIC));
-	//					for (String s : wert) {
-	//						System.out.println(s);
-	//					}
-						String vitamin = wert[4];
-						System.out.println("Ein Vitamin: "+vitamin);
+						String item = con.getItem(TOPIC);
+						if (item.contains(con.getLastItemId(TOPIC))){
+							System.out.println(con.getItemId(TOPIC));
+							System.out.println(data.getResultID(item));
+							System.out.println(data.getResultTag(item));
+							System.out.println(data.getResultGewicht(item));
+							System.out.println(data.getResultName(item));
+							String[] wert = data.getResults(item);
+		//					for (String s : wert) {
+		//						System.out.println(s);
+		//					}
+							String vitamin = wert[4];
+							System.out.println("Ein Vitamin: "+vitamin);
+						}
+						System.out.println(con.getLastItemId(TOPIC));
 					}
 				}
 				else if (input.matches("l")) {

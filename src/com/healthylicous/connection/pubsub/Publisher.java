@@ -29,17 +29,22 @@ public class Publisher {
 				System.out.println("Connection Success!!");
 			}
 			
-//			handler.discoverNodes(TOPIC);
-//			handler.delAllItems(TOPIC);
-			
-//			handler.getItem(TOPIC);
 			
 			while(true){
 				Scanner scan = new Scanner(System.in);
 				System.out.println("Wähle (r)esult, (d)elete, (w)hois, (c)reate, delete (a)ll Items oder set (k)alorie");
 				String input = scan.next();
 				if (input.matches("r")) {
-					handler.publishPayload("Vorschlag", new DataHandler().setResult());
+//					handler.publishPayload("Vorschlag", new DataHandler().setResult());
+					handler.publishPayload("Vorschlag", new DataHandler().setResult(handler.getItemId("Vorschlag")));
+//					if (handler.getLastItemId("Vorschlag") == null) {
+//						handler.publishPayload("Vorschlag", new DataHandler().setResult());
+//					}
+//					else {
+//						String id = handler.getItemId("Vorschlag").concat(String.valueOf(5));
+//						System.out.println(id);
+//						handler.publishPayload("Vorschlag", new DataHandler().setResult(id));
+//					}
 				}
 				else if(input.matches("k")){
 					System.out.println("Titel eingeben: ");
@@ -75,12 +80,14 @@ public class Publisher {
 					System.out.println("Node eingeben: ");
 					String get = scan.next();
 					System.out.println("TopicId: "+handler.getTopicID(get));
-					handler.discoItems(get);
+					System.out.println("discoItems: "+handler.discoItems(get));
 					handler.getChildElXML(get);
 					System.out.println("Service: "+handler.getServiceName());
 					handler.discoverNodes(get);
 					handler.getItem(get);
 					handler.getSubscriptions(get);
+					System.out.println("ItemID: "+handler.getFirstItemId(get));
+					System.out.println("ItemID: " + handler.getLastItemId(get));
 				}
 				else
 					System.exit(1);
