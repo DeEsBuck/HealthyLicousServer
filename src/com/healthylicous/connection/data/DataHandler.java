@@ -56,7 +56,7 @@ public class DataHandler {
 	 * @return
 	 */
 	public PayloadItem setProfile(String alter, String gewicht, String groesse, String geschlecht) {
-		SimplePayload payload = new SimplePayload("profil","http://www.example.org/profil", "<profil xmlns='http://www.example.org/profil'><alter>"+alter+"</alter><gewicht metric='kg'>"+gewicht+"</gewicht><groesse metric='cm'>"+groesse+"</groesse><geschlecht>"+geschlecht+"</geschlecht></profil>");
+		SimplePayload payload = new SimplePayload("profil","http://www.example.org/profil", "<profil xmlns='http://www.example.org/profil'><alter>"+alter+"</alter><gewicht metric='g'>"+gewicht+"</gewicht><groesse metric='mm'>"+groesse+"</groesse><geschlecht>"+geschlecht+"</geschlecht></profil>");
 		PayloadItem payloaditem = new PayloadItem(null, payload);
 		return payloaditem;
 	}
@@ -80,13 +80,13 @@ public class DataHandler {
             System.out.println(items.getItems().toString());
         }
         else
-        	System.out.println("Nööööööööööööööö, passt nischt");
+        	System.out.println("Ung�ltig");
 		
         return alter;
 	}
 	
 	public String getProfileGewicht(ItemPublishEvent items) {
-		Pattern regex = Pattern.compile("[\\d]{1,3},[\\d]{2}</gewicht>");
+		Pattern regex = Pattern.compile("[\\d]{1,3}</gewicht>");
         Matcher ma = regex.matcher(items.getItems().toString());
         String gewicht = null;
         
@@ -99,13 +99,13 @@ public class DataHandler {
             System.out.println(items.getItems().toString());
         }
         else
-        	System.out.println("Nööööööööööööööö, passt nischt");
+        	System.out.println("Ung�ltig");
 		
         return gewicht;
 	}
 	
 	public String getProfileGroesse(ItemPublishEvent items) {
-		Pattern regex = Pattern.compile("[\\d]{1,3},[\\d]{2}</groesse>");
+		Pattern regex = Pattern.compile("[\\d]{1,3}</groesse>");
         Matcher ma = regex.matcher(items.getItems().toString());
         String groesse = null;
         
@@ -118,7 +118,7 @@ public class DataHandler {
             System.out.println(items.getItems().toString());
         }
         else
-        	System.out.println("Nööööööööööööööö, passt nischt");
+        	System.out.println("Ung�ltig");
 		
         return groesse;
 	}
@@ -137,7 +137,7 @@ public class DataHandler {
             System.out.println(items.getItems().toString());
         }
         else
-        	System.out.println("Nööööööööööööööö, passt nischt");
+        	System.out.println("Ung�ltig");
 		
         return geschlecht;
 	}

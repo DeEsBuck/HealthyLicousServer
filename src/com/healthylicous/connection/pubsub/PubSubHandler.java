@@ -26,9 +26,8 @@ import org.jivesoftware.smackx.pubsub.Subscription;
 public class PubSubHandler extends XMPPConnection{
 	private static final String HOST = "Asus";
 	private static final int PORT = 5222;
-	
-	String topicID;
 	static ConnectionConfiguration config = new ConnectionConfiguration(HOST,PORT);
+	String topicID;
 	
 	/**
 	 * 
@@ -36,11 +35,6 @@ public class PubSubHandler extends XMPPConnection{
 	 */
 	public PubSubHandler() throws XMPPException {
 		super(config);
-	}
-	
-	public PubSubHandler(String topicID) throws XMPPException {
-		super(config);
-		this.topicID = topicID;
 	}
 
 	/**
@@ -56,7 +50,7 @@ public class PubSubHandler extends XMPPConnection{
 		form.setPublishModel(PublishModel.open);
 		form.setNotifyDelete(true);
 		form.setSubscribe(true);
-		
+		this.topicID = topicID;
 		Node n = createPubSubManager().createNode(topicID, form);
 		return n;
 	}
@@ -66,7 +60,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @return
 	 */
 	private PubSubManager createPubSubManager() {
-		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub.doro-f5sr");
+		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub."+PubSubHandler.this.getServiceName());
 		return mgr;
 	}
 	
@@ -77,7 +71,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @throws XMPPException
 	 */
 	private Node getNode(String topicID) throws XMPPException{
-		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub.doro-f5sr");
+		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub."+PubSubHandler.this.getServiceName());
 		Node n = mgr.getNode(topicID);
 		return n;
 	}
@@ -89,7 +83,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @throws XMPPException
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void publishPayload(String topicID, PayloadItem payload) throws XMPPException{
+	public void publishPayload(PayloadItem payload) throws XMPPException{
 		((LeafNode)getNode(topicID)).publish(payload);
 	}
 	
@@ -99,8 +93,9 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void subscribe(String jid, String topicID) throws XMPPException{
+	public void subscribe(String topicID, String jid) throws XMPPException{
 		getNode(topicID).subscribe(jid);
+		listener(topicID);
 	}
 	
 	/**
@@ -109,7 +104,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void unSubscribe(String jid, String topicID) throws XMPPException{
+	public void unSubscribe(String topicID, String jid) throws XMPPException{
 		getNode(topicID).unsubscribe(jid);
 	}
 	
@@ -122,16 +117,13 @@ public class PubSubHandler extends XMPPConnection{
 		getNode(topicID).addItemEventListener(new ItemEventCoordinator<Item>());
 	}
 	
-	public void deListener(String topicID) throws XMPPException {		
-		((LeafNode)getNode(topicID)).addItemDeleteListener(new ItemDeleteCoordinator<Item>());
-	}
-	
+
 	/**
 	 * 
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public String getTopicID(String topicID) throws XMPPException{
+	public String getTopicID() throws XMPPException{
 		return getNode(topicID).getId();
 	}
 	
@@ -142,6 +134,23 @@ public class PubSubHandler extends XMPPConnection{
 	 */
 	public void discoverNodes(String topicID) throws XMPPException {
 		System.out.println(createPubSubManager().discoverNodes(topicID).toXML());
+	}
+	
+	/**
+	 * 
+	 * @param topicID
+	 * @return
+	 */
+	public Boolean doesNodeExist(String topicID) {
+		Boolean exist = false;
+		try {
+			createPubSubManager().discoverNodes(topicID);
+			exist = true;
+		} catch (XMPPException e) {
+			e.getMessage();
+			exist = false;
+		}
+		return exist;
 	}
 	
 	/**
@@ -159,7 +168,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @return 
 	 * @throws XMPPException
 	 */
-	public String discoItems(String topicID) throws XMPPException {
+	public String discoItems() throws XMPPException {
 		DiscoverItems disco = ((LeafNode)getNode(topicID)).discoverItems();
 //		System.out.println("DiscoResult: " + disco.toXML());
 		return disco.toXML();
@@ -170,7 +179,15 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void getCurrentItems(String topicID) throws XMPPException {
+	public void getCurrentItems() throws XMPPException {
+		Iterable<Subscription> id = (Iterable<Subscription>) getNode(topicID).getSubscriptions();
+		for (Subscription i : id) {
+			System.out.println("SubscriptionID: " + i.getId());
+			System.out.println("ItemResult: " + ((LeafNode)getNode(topicID)).getItems(i.getId()));
+		}
+	}
+	
+	public void getCurrentItemsOf(String topicID) throws XMPPException {
 		Iterable<Subscription> id = (Iterable<Subscription>) getNode(topicID).getSubscriptions();
 		for (Subscription i : id) {
 			System.out.println("SubscriptionID: " + i.getId());
@@ -183,7 +200,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public String getThisSubscriber(String topicID) throws XMPPException {
+	public String getThisSubscriber() throws XMPPException {
 		 String sub = null;
 		 if (getNode(topicID).getSubscriptions().isEmpty()){
 			 System.out.println("keine Subscriber");
@@ -200,7 +217,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public String getItem(String topicID) throws XMPPException {
+	public String getItem() throws XMPPException {
 		 String give = null;
 		 if (getNode(topicID).getSubscriptions().isEmpty()){
 			 System.out.println("keine Subscriber");
@@ -219,7 +236,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @return
 	 * @throws XMPPException
 	 */
-	public String getFirstItemId(String topicID) throws XMPPException {
+	public String getFirstItemId() throws XMPPException {
 		String give = null;
 		Collection<PayloadItem> item = ((LeafNode)getNode(topicID)).getItems(); 
 		Iterator<PayloadItem> s = item.iterator();
@@ -233,9 +250,9 @@ public class PubSubHandler extends XMPPConnection{
 	 * @return
 	 * @throws XMPPException
 	 */
-	public String getLastItemId(String topicID) throws XMPPException {
+	public String getLastItemId() throws XMPPException {
 		Pattern regExp = Pattern.compile("name=\"[a-z0-9-]*");
-		String give = this.discoItems(topicID);
+		String give = this.discoItems();
 		String result = null;
 		Matcher ma = regExp.matcher(give);
 	    while (ma.find()) {
@@ -248,9 +265,9 @@ public class PubSubHandler extends XMPPConnection{
 		return result;	
 	}
 	
-	public String getItemId(String topicID) throws XMPPException {
+	public String getItemId() throws XMPPException {
 		Pattern regExp = Pattern.compile("<item id='[a-z0-9]*");
-		String give = this.getItem(topicID);
+		String give = this.getItem();
 		String result = null;
 		Matcher ma = regExp.matcher(give);
 	    while (ma.find()) {
@@ -268,7 +285,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void getPersistedItems(String topicID) throws XMPPException {
+	public void getPersistedItems() throws XMPPException {
 		Iterable<Subscription> id = (Iterable<Subscription>) getNode(topicID).getSubscriptions();
 		for (Subscription i : id) {
 			System.out.println("SubscriptionID: " + i.getId());
@@ -282,7 +299,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @return 
 	 * @throws XMPPException
 	 */
-	public String getSubscriptions(String topicID) throws XMPPException {
+	public String getSubscriptions() throws XMPPException {
 		Iterable<Subscription> id = (Iterable<Subscription>) getNode(topicID).getSubscriptions();
 		String subs = null;
 		for (Subscription i : id) {
@@ -297,7 +314,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void getChildElXML(String topicID) throws XMPPException {
+	public void getChildElXML() throws XMPPException {
 		DiscoverItems disco = ((LeafNode)getNode(topicID)).discoverItems();
 		System.out.println("ResultChildElement: " + disco.getChildElementXML());
 	}
@@ -307,7 +324,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void delAllItems(String topicID) throws XMPPException {
+	public void delAllItems() throws XMPPException {
 		((LeafNode)getNode(topicID)).deleteAllItems();
 	}
 	
@@ -316,7 +333,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void getAffiliation(String topicID) throws XMPPException {
+	public void getAffiliation() throws XMPPException {
 		Iterable<Affiliation> affil = createPubSubManager().getAffiliations();
 		for (Affiliation a : affil) {
 			System.out.println("Affiliation: " + a.getType());
