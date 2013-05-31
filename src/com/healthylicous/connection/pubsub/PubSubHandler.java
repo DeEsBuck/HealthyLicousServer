@@ -265,6 +265,11 @@ public class PubSubHandler extends XMPPConnection{
 		return result;	
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws XMPPException
+	 */
 	public String getItemId() throws XMPPException {
 		Pattern regExp = Pattern.compile("<item id='[a-z0-9]*");
 		String give = this.getItem();

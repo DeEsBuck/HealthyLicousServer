@@ -14,7 +14,6 @@ public class HealthyLicousServer {
 		final HealthyLicousPubSub thread = new HealthyLicousPubSub();
 		Timer timer = new Timer(thread.getName());
 		timer.scheduleAtFixedRate( new TimerTask() {
-			
 			@Override
 			public void run() {
 				if (thread.getState() == Thread.State.NEW) {
@@ -24,5 +23,5 @@ public class HealthyLicousServer {
 			
 		}, 100, 60000);
 	}
-
+	
 }

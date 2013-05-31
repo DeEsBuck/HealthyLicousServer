@@ -4,7 +4,8 @@ import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.keepalive.KeepAliveManager;
 import org.jivesoftware.smackx.ping.PingManager;
 
-import com.healthylicous.connection.data.DataHandler;
+import com.healthylicous.util.Compute;
+import com.healthylicous.util.DataHandler;
 
 public class HealthyLicousPubSub extends Thread {
 	public static final String VORSCHLAG = "Vorschlag";
@@ -13,9 +14,9 @@ public class HealthyLicousPubSub extends Thread {
 	private static final String USER = "admin";
 	private static final String PASSWORD = "openfire";
 	
-	DataHandler data = new DataHandler();
 	static PubSubHandler con;
-	
+	static Compute comp;
+	DataHandler data = new DataHandler();
 	
 	/**
 	 * 1. Apply Connection (Test if only one Account for PubSub gets permission)
@@ -45,11 +46,11 @@ public class HealthyLicousPubSub extends Thread {
 		
 	}
 	
-	public static void connection() throws XMPPException {
+	public final static void connection() throws XMPPException {
 		con = new PubSubHandler();
 		con.connect();
 		if (con.isConnected()) {
-			keepConnection();
+//			keepConnection();
 			System.out.println("Connection Success!!");
 			con.login(USER, PASSWORD);
 		}
@@ -57,12 +58,12 @@ public class HealthyLicousPubSub extends Thread {
 
 	}
 		
-	public static void setVorschlag() throws XMPPException {
+	public final static void setVorschlag() throws XMPPException {
 		// Controll if Node already exists, if not, create then
 		if (con.doesNodeExist(VORSCHLAG)) {
 			con.discoverNodes(VORSCHLAG);
 			// TODO Resultate publishen und ItemID zuweisen
-//			con.publishPayload(new DataHandler().setResult(con.getItemId()));
+//			con.publishPayload(comp.setResult(con.getItemId()));
 		}
 		else {
 			System.out.println(VORSCHLAG+" does not exist. \nCreated now.");
@@ -71,14 +72,11 @@ public class HealthyLicousPubSub extends Thread {
 	}
 		
 		
-	public static void subToNodes() throws XMPPException {	
+	public final static void subToNodes() throws XMPPException {	
 		// Server want to get some Kalories and Profile
 		if (con.doesNodeExist(KALORIES) && con.doesNodeExist(PROFILE)) {
 			con.subscribe(KALORIES, con.getUser());
 			con.subscribe(PROFILE, con.getUser());
-				
-//			con.unSubscribe(KALORIES, con.getUser());				
-//			con.unSubscribe(KALORIES, con.getUser());
 		}
 		else {
 			System.out.println("Can't listen to: "+KALORIES+" or "+PROFILE);

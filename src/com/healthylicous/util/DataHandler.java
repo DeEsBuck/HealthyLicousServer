@@ -1,4 +1,4 @@
-package com.healthylicous.connection.data;
+package com.healthylicous.util;
 
 import java.util.Collection;
 import java.util.Hashtable;
@@ -9,16 +9,84 @@ import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.SimplePayload;
 
+import com.healthylicous.connection.data.Vorschlag;
+import com.healthylicous.connection.data.Vorschlag.Head;
+import com.healthylicous.connection.data.Vorschlag.Mselemente;
+import com.healthylicous.connection.data.Vorschlag.Naehrstoffe;
+import com.healthylicous.connection.data.Vorschlag.Vitamine;
+
 
 public class DataHandler {
-
+	String id, user;
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getid() {
+		return id;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getUser() {
+		return user;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getUser(ItemPublishEvent items) {
+		Pattern regex = Pattern.compile("user=\"[a-z]*@[a-z0-9-]*/Smack");
+        Matcher ma = regex.matcher(items.getItems().toString());
+        String user = null;
+        
+        if (ma.find()) {
+            String[] result = ma.group().split("user=\"");
+            for (String r : result) {
+            	user = r;
+            }
+            // Control output
+//            System.out.println(items.getItems().toString());
+        }
+        else
+        	System.out.println("Ungültig");
+		
+		return user;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getid(ItemPublishEvent items) {
+		Pattern regex = Pattern.compile("id='[a-z0-9-]*");
+        Matcher ma = regex.matcher(items.getItems().toString());
+        String id = null;
+        
+        if (ma.find()) {
+            String[] result = ma.group().split("id='");
+            for (String r : result) {
+            	id = r;
+            }
+            // Control output
+//            System.out.println(items.getItems().toString());
+        }
+        else
+        	System.out.println("Ungültig");
+		return id;
+	}
+	
 	/**
 	 * 
 	 * @param input
 	 * @return
 	 */
-	public PayloadItem setKalories(String input) {
-		SimplePayload payload = new SimplePayload("kcal","http://www.example.org/kalories", "<kalories xmlns='http://www.example.org/kalories'><base metric='kcal' >"+input+"</base></kalories>");
+	public PayloadItem setKalories(String input, String user) {
+		SimplePayload payload = new SimplePayload("kcal","http://www.example.org/kalories", "<kalories xmlns='http://www.example.org/kalories' user='"+user+"'><base metric='kcal' >"+input+"</base></kalories>");
 		PayloadItem payloaditem = new PayloadItem(null, payload);
 		return payloaditem;
 	}
@@ -55,8 +123,9 @@ public class DataHandler {
 	 * @param geschlecht
 	 * @return
 	 */
-	public PayloadItem setProfile(String alter, String gewicht, String groesse, String geschlecht) {
-		SimplePayload payload = new SimplePayload("profil","http://www.example.org/profil", "<profil xmlns='http://www.example.org/profil'><alter>"+alter+"</alter><gewicht metric='g'>"+gewicht+"</gewicht><groesse metric='mm'>"+groesse+"</groesse><geschlecht>"+geschlecht+"</geschlecht></profil>");
+	public PayloadItem setProfile(String user, String alter, String gewicht, String groesse, String geschlecht) {
+		this.user = user;
+		SimplePayload payload = new SimplePayload("profil","http://www.example.org/profil", "<profil xmlns='http://www.example.org/profil' user='"+user+"'><alter>"+alter+"</alter><gewicht metric='g'>"+gewicht+"</gewicht><groesse metric='cm'>"+groesse+"</groesse><geschlecht>"+geschlecht+"</geschlecht></profil>");
 		PayloadItem payloaditem = new PayloadItem(null, payload);
 		return payloaditem;
 	}
@@ -77,7 +146,7 @@ public class DataHandler {
             	alter = r;
             }
             // Control output
-            System.out.println(items.getItems().toString());
+//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -96,7 +165,7 @@ public class DataHandler {
             	gewicht = r;
             }
             // Control output
-            System.out.println(items.getItems().toString());
+//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -115,7 +184,7 @@ public class DataHandler {
             	groesse = r;
             }
             // Control output
-            System.out.println(items.getItems().toString());
+//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -134,7 +203,7 @@ public class DataHandler {
             	geschlecht = r;
             }
             // Control output
-            System.out.println(items.getItems().toString());
+//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -147,18 +216,17 @@ public class DataHandler {
 		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result'>"+setVorschlag(itemId)+"</result>");
 		PayloadItem payloaditem = new PayloadItem(null, payload);
 		return payloaditem;
-		
 	}
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public PayloadItem setResult(String itemId) {
-		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result'>"+setVorschlag(itemId)+"</result>");
+	public PayloadItem setResult(String itemId, String user) {
+		this.user = user;
+		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result' user='"+user+"'>"+setVorschlag(itemId)+"</result>");
 		PayloadItem payloaditem = new PayloadItem(null, payload);
 		return payloaditem;
-		
 	}
 	
 	/**
@@ -166,8 +234,9 @@ public class DataHandler {
 	 * @param index
 	 * @return
 	 */
-	public String setVorschlag(String itemId) {
-		String s = "<vorschlag  id='"+itemId+"' tageszeit='"+Vorschlag.head(Vorschlag.Head.TAGESZEIT)+"'><name metric='g' gewicht='"+Vorschlag.head(Vorschlag.Head.GEWICHT)+"'>"+Vorschlag.head(Vorschlag.Head.NAME)+"</name><kalorien metric='kcal'>"+Vorschlag.head(Vorschlag.Head.KALORIEN)+"</kalorien><fluessigkeit metric='l'>"+Vorschlag.head(Vorschlag.Head.FLUESSIGKEIT)+"</fluessigkeit>"+naehrstoffe()+mselemente()+vitamine()+"</vorschlag>";
+	public String setVorschlag(String id) {
+		this.id = id;
+		String s = "<vorschlag  id='"+id+"' tageszeit='"+Vorschlag.head(Vorschlag.Head.TAGESZEIT)+"'><name metric='g' gewicht='"+Vorschlag.head(Vorschlag.Head.GEWICHT)+"'>"+Vorschlag.head(Vorschlag.Head.NAME)+"</name><kalorien metric='kcal'>"+Vorschlag.head(Vorschlag.Head.KALORIEN)+"</kalorien><fluessigkeit metric='l'>"+Vorschlag.head(Vorschlag.Head.FLUESSIGKEIT)+"</fluessigkeit>"+naehrstoffe()+mselemente()+vitamine()+"</vorschlag>";
 		return s;
 	}
 	
