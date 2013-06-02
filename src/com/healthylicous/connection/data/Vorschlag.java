@@ -27,13 +27,13 @@ public class Vorschlag {
 	    	result = "Morgens";
 	        break;
 	    case GEWICHT:
-	    	result = "160";
+	    	result = "1000";
 	    	break;
 	    case NAME:
-	    	result = "Banana";
+	    	result = "Drachenei";
 	    	break;
 	    case KALORIEN:
-	    	result = "150";
+	    	result = "1790";
 	    	break;	
 	    case FLUESSIGKEIT:
 	    	result = "2,0";
@@ -47,13 +47,13 @@ public class Vorschlag {
 		
 		switch (h) {
 	    case EIWEISS:
-	    	result = "50";
+	    	result = "138";
 	        break;
 	    case FETTE:
-	    	result = "13";
+	    	result = "132";
 	    	break;
 	    case KOHLEHYDRATE:
-	    	result = "300";
+	    	result = "13";
 	    	break;
 		}
 		return result;
@@ -63,22 +63,22 @@ public class Vorschlag {
 		String result = null;
 		switch (h) {
 	    case MAGNESIUM:
-	    	result = "50";
+	    	result = "140";
 	        break;
 	    case CALCIUM:
-	    	result = "13";
+	    	result = "990";
 	    	break;
 	    case EISEN:
-	    	result = "300";
+	    	result = "41";
 	    	break;
 	    case JOD:
-			result = "300";
+			result = "100";
 			break;
 	    case FLUORID:
-			result = "300";
+			result = "1000";
 			break;	
 	    case ZINK:
-			result = "300";
+			result = "14";
 			break;
 	    case SELEN:
 			result = "300";
@@ -91,37 +91,37 @@ public class Vorschlag {
 		String result = null;
 		switch (h) {
 	    case VITAMIN_A:
-	    	result = "50";
+	    	result = "6930";
 	        break;
 	    case VITAMIN_B:
 	    	result = "13";
 	    	break;
 	    case VITAMIN_D:
-	    	result = "300";
+	    	result = "40";
 	    	break;
 	    case VITAMIN_E:
-			result = "300";
+			result = "3000";
 			break;
 	    case VITAMIN_B1:
-			result = "300";
+			result = "1100";
 			break;	
 	    case VITAMIN_B2:
-			result = "300";
+			result = "4700";
 			break;
 	    case VITAMIN_B6:
-			result = "300";
+			result = "1200";
 			break;
 	    case VITAMIN_B12:
-			result = "300";
+			result = "90";
 			break;
 	    case VITAMIN_C:
-			result = "300";
+			result = "0";
 			break;
 	    case NIACIN:
 			result = "300";
 			break;
 	    case FOLSAEURE:
-			result = "300";
+			result = "600";
 			break;
 		}
 		return result;

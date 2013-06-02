@@ -4,8 +4,8 @@ import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.keepalive.KeepAliveManager;
 import org.jivesoftware.smackx.ping.PingManager;
 
-import com.healthylicous.util.Compute;
 import com.healthylicous.util.DataHandler;
+import com.healthylicous.util.Compute;
 
 public class HealthyLicousPubSub extends Thread {
 	public static final String VORSCHLAG = "Vorschlag";
@@ -16,7 +16,7 @@ public class HealthyLicousPubSub extends Thread {
 	
 	static PubSubHandler con;
 	static Compute comp;
-	DataHandler data = new DataHandler();
+	DataHandler data = new com.healthylicous.util.DataHandler();
 	
 	/**
 	 * 1. Apply Connection (Test if only one Account for PubSub gets permission)
@@ -59,16 +59,15 @@ public class HealthyLicousPubSub extends Thread {
 	}
 		
 	public final static void setVorschlag() throws XMPPException {
-		// Controll if Node already exists, if not, create then
-		if (con.doesNodeExist(VORSCHLAG)) {
-			con.discoverNodes(VORSCHLAG);
-			// TODO Resultate publishen und ItemID zuweisen
-//			con.publishPayload(comp.setResult(con.getItemId()));
-		}
-		else {
-			System.out.println(VORSCHLAG+" does not exist. \nCreated now.");
-			con.createTopic(VORSCHLAG);
-		}
+			// Controll if Node already exists, if not, create then
+			if (!con.doesNodeExist(VORSCHLAG)) {
+				System.out.println(VORSCHLAG+" does not exist. \nCreated now.");
+				con.createTopic(VORSCHLAG);
+			}
+			else {
+				con.deleteTopic(VORSCHLAG);
+				con.createTopic(VORSCHLAG);
+			}		
 	}
 		
 		

@@ -36,6 +36,10 @@ public class PubSubHandler extends XMPPConnection{
 	public PubSubHandler() throws XMPPException {
 		super(config);
 	}
+	
+	public void setTopicID(String topicID) {
+		this.topicID = topicID;
+	}
 
 	/**
 	 * 
@@ -70,7 +74,7 @@ public class PubSubHandler extends XMPPConnection{
 	 * @return
 	 * @throws XMPPException
 	 */
-	private Node getNode(String topicID) throws XMPPException{
+	protected Node getNode(String topicID) throws XMPPException{
 		PubSubManager mgr = new PubSubManager(PubSubHandler.this, "pubsub."+PubSubHandler.this.getServiceName());
 		Node n = mgr.getNode(topicID);
 		return n;

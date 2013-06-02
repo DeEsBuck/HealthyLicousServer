@@ -1,6 +1,5 @@
 package com.healthylicous.connection.pubsub;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,11 +8,13 @@ import java.io.Writer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
-import com.healthylicous.util.Compute;
 import com.healthylicous.util.DataHandler;
+import com.healthylicous.util.Compute;
+import com.healthylicous.util.ResultCoordinator;
 
 
 public class ItemEventCoordinator<T> implements ItemEventListener {
@@ -21,10 +22,11 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 	
 	@Override
 	public void handlePublishedItems(ItemPublishEvent items) {
-		double age,weight,height;
+		double age,weight,height,newkal;
 		int kal;
-		String gender;
+		String gender, user;
 		Compute comp;
+		PubSubHandler con;
 		
 		System.out.println(items.getPublishedDate());
         
@@ -35,11 +37,11 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
         	else {
 		        age = Double.parseDouble(new DataHandler().getProfileAlter(items));
 		        gender = new DataHandler().getProfileGeschlecht(items);
-		        weight = Double.parseDouble(new DataHandler().getProfileGewicht(items));
+		        weight = Double.parseDouble(new com.healthylicous.util.DataHandler().getProfileGewicht(items));
 		        height = Double.parseDouble(new DataHandler().getProfileGroesse(items));
-		        System.out.println("User: "+new DataHandler().getUser(items));
+		        user = new DataHandler().getUser(items);
 		        System.out.println("age: "+age+"; gender: "+gender+"; weight: "+weight+"; height: "+height);
-		        System.out.println("User: "+new DataHandler().getUser(items));
+		        System.out.println("User: "+user);
 		        Writer wr = null;
 		        try {
 					wr = new FileWriter(FILE);
@@ -54,8 +56,13 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 					}
 				}
 		        comp = new Compute(age, weight, height, gender);
+		        ResultCoordinator res = new ResultCoordinator(getItemId(items.getItems().toString()), user, comp.defaultNeeds());
+		        System.out.println(res.getid());
+		        res.start();
 		        System.out.println("base: "+Double.toString(comp.base(age, weight, height, gender)));
-		        System.out.println("Needed dev Kalories: "+Double.toString(comp.defaultNeeds()));
+		        System.out.println("Needed def Kalories: "+Double.toString(comp.defaultNeeds()));
+		        
+				
         	}
         }        
         else if(items.getNodeId().contains("Kalories")) {
@@ -74,12 +81,18 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 				        gender = getProfileGeschlecht(in);
 				        weight = Double.parseDouble(getProfileGewicht(in));
 				        height = Double.parseDouble(getProfileGroesse(in));
-				        System.out.println("User: "+getUser(in));
+				        user = getUser(in);
+				        System.out.println("tempProf User: "+user);
 				        System.out.println("age: "+age+"; gender: "+gender+"; weight: "+weight+"; height: "+height);
 				        comp = new Compute(age, weight, height, gender);
-				        System.out.println("Needed dev Kalories: "+Double.toString(comp.defaultNeeds()));
+				        newkal = comp.newNeeds(kal);
+				        ResultCoordinator res = new ResultCoordinator(getItemId(in), user, comp.defaultNeeds());
+				        res.start();
+				        System.out.println("Needed def Kalories: "+Double.toString(comp.defaultNeeds()));
 		        		System.out.println("Needed Kalories: "+Double.toString(comp.newNeeds(kal)));
-		        		System.out.println("User: "+new DataHandler().getUser(items));
+		        		System.out.println("Items User: "+new DataHandler().getUser(items));
+		        		
+		        		
 					}	
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -96,6 +109,7 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
         else System.out.println("No Item for Node Kalories or Profile were sent");
         
 	}
+	
 
 	private String getUser(String string) {
 		Pattern regex = Pattern.compile("user=\"[a-z]*@[a-z0-9-]*/Smack");
@@ -183,5 +197,20 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
         return alter;
 	}
 	
+	
+	public String getItemId(String items) {
+		Pattern regExp = Pattern.compile("<item id='[a-z0-9-]*");
+		String give = items;
+		String result = null;
+		Matcher ma = regExp.matcher(give);
+	    while (ma.find()) {
+	    	result = ma.group();
+	        String[] ja = ma.group().split("<item id='");
+	        for (String r : ja) {
+	         	result = r;
+	        }
+	    }
+		return result;	
+	}
 }
 

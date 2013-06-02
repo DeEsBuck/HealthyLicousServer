@@ -114,8 +114,8 @@ public class Compute {
 	 * The result of needed Kalories by default activities
 	 * @return
 	 */
-	public long defaultNeeds() {
-		long bedarf = Math.round(bmr*met);
+	public double defaultNeeds() {
+		double bedarf = Math.round(bmr*met);
 		return bedarf;
 	}
 	
@@ -137,11 +137,6 @@ public class Compute {
 	public double newNeeds(int kal) {
 		double bedarf = Math.round((bmr*met)+kal);
 		return bedarf;
-	}
-	
-	public void setResult() {
-		// TODO Query nach höhe der Kal aus activity, DB Abfrage
-		Vorschlag.head(Vorschlag.Head.TAGESZEIT);
 	}
 	
 	
