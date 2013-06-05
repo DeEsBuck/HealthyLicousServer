@@ -97,7 +97,7 @@ public class Compute {
 	 * Gives only the a standard activity of normal day activity of a user 
 	 */
 	public void defaultActivity() {
-		int sleep = 8; int sitting = 7; int easy = 6; int middle = 2; int hard = 1; // in hours, should be the sum of 24 hours
+		int sleep = 8; int sitting = 8; int easy = 8; int middle = 0; int hard = 0; // in hours, should be the sum of 24 hours
 		int stunden = sleep + sitting + easy + middle + hard;
 		this.met = ((((Math.abs(sleep)*0.9)+(Math.abs(sitting)*1.2)+(Math.abs(easy)*2.2)+(Math.abs(middle)*3.3)+(Math.abs(hard)*6.6))/stunden)*1000) / 1000;
 	}

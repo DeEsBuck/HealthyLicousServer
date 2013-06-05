@@ -4,246 +4,248 @@ targetNamespace="http://www.example.org/result"
 xmlns:healthyns="http://www.example.org/result" 
 elementFormDefault="qualified">
 
-	<element name="result" type="healthyns:result_type" />
-	
-	<complexType name="result_type">
-		<all>
-			<element name="vorschlag" maxOccurs="unbounded">
-				<complexType>
-					<sequence>
-						<element name="name" maxOccurs="1">
-							<complexType>
-								<simpleContent>
-									<extension base="float">
-										<attribute name="metric" type="healthyns:g_metric" />
-										<attribute name="gewicht" type="integer" />
-									</extension>	
-								</simpleContent>
-							</complexType>
-						</element>
-						<element name="kalorien" maxOccurs="1">
-							<complexType>
-								<simpleContent>
-									<extension base="float">
-										<attribute name="metric" type="healthyns:g_metric" />
-									</extension>	
-								</simpleContent>
-							</complexType>
-						</element>
-						<element name="fluessigkeit" maxOccurs="1">
-							<complexType>
-								<simpleContent>
-									<extension base="float">
-										<attribute name="metric" type="healthyns:g_metric" />
-									</extension>	
-								</simpleContent>
-							</complexType>
-						</element>
-						<element name="naehrstoffe" maxOccurs="1">
-							<complexType>
-								<sequence>
-									<element name="eiweiss" maxOccurs="1" >
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="fette" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="kohlenhydrate" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-								</sequence>
-							</complexType>
-						</element>
-						<element name="mselemente" maxOccurs="1">
-							<complexType>
-								<sequence>
-									<element name="magnesium" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="calcium" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="eisen" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="jod" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="flourid" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="zink" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="selen" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-								</sequence>
-							</complexType>
-						</element>
-						<element name="vitamine" maxOccurs="1">
-							<complexType>
-								<sequence>
-									<element name="vitamina" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="vitamind" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="vitamine" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="vitaminb1" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="vitaminb2" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="vitaminb6" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="vitaminb12" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="vitaminc" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="niacin" maxOccurs="1" >
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-									<element name="folsaeure" maxOccurs="1">
-										<complexType>
-											<simpleContent>
-												<extension base="float">
-													<attribute name="metric" type="healthyns:g_metric" />
-												</extension>	
-											</simpleContent>
-										</complexType>
-									</element>
-								</sequence>	
-							</complexType>
-						</element>
-					</sequence>
-					<attribute name="id" type="healthyns:id_type" />
-					<attribute name="tageszeit" type="healthyns:tag_type" />
-				</complexType>
-			</element>
-		</all>
-	</complexType>
+	<element name="result">
+		<complexType>
+			<all>		
+				<element name="vorschlag" maxOccurs="1">
+					<complexType>
+						<sequence>
+							<element name="name" maxOccurs="1">
+								<complexType>
+									<simpleContent>
+										<extension base="float">
+											<attribute name="metric" type="healthyns:g_metric" />
+											<attribute name="gewicht" type="integer" />
+										</extension>	
+									</simpleContent>
+								</complexType>
+							</element>
+							<element name="kalorien" maxOccurs="1">
+								<complexType>
+									<simpleContent>
+										<extension base="float">
+											<attribute name="metric" type="healthyns:g_metric" />
+										</extension>	
+									</simpleContent>
+								</complexType>
+							</element>
+							<element name="fluessigkeit" maxOccurs="1">
+								<complexType>
+									<simpleContent>
+										<extension base="float">
+											<attribute name="metric" type="healthyns:g_metric" />
+										</extension>	
+									</simpleContent>
+								</complexType>
+							</element>
+							<element name="naehrstoffe" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="eiweiss" maxOccurs="1" >
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="fette" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="kohlenhydrate" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+									</sequence>
+								</complexType>
+							</element>
+							<element name="mselemente" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="magnesium" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="calcium" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="eisen" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="jod" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="flourid" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="zink" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="selen" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+									</sequence>
+								</complexType>
+							</element>
+							<element name="vitamine" maxOccurs="1">
+								<complexType>
+									<sequence>
+										<element name="vitamina" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="vitamind" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="vitamine" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="vitaminb1" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="vitaminb2" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="vitaminb6" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="vitaminb12" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="vitaminc" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="niacin" maxOccurs="1" >
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+										<element name="folsaeure" maxOccurs="1">
+											<complexType>
+												<simpleContent>
+													<extension base="float">
+														<attribute name="metric" type="healthyns:g_metric" />
+													</extension>	
+												</simpleContent>
+											</complexType>
+										</element>
+									</sequence>	
+								</complexType>
+							</element>
+						</sequence>
+						<attribute name="id" type="healthyns:id_type" />
+						<attribute name="tageszeit" type="healthyns:tag_type" />
+					</complexType>
+				</element>
+			</all>
+			<attribute name="user" type="healthyns:user_type" />
+			<attribute name="itemid" type="healthyns:item_type" />
+		</complexType>
+	</element>
 	
 	<simpleType name="id_type">
 		<restriction base="string" >
@@ -256,6 +258,18 @@ elementFormDefault="qualified">
 			<enumeration value="morgens" />
 			<enumeration value="mittags" />
 			<enumeration value="abends" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="user_type" >
+		<restriction base="string" >
+			<pattern value="[a-z0-9-]*" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="item_type" >
+		<restriction base="string" >
+			<pattern value="[a-z]*@[a-z0-9-]*/Smack" />
 		</restriction>
 	</simpleType>
 	

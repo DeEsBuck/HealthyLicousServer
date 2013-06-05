@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<profil xmlns="http://www.example.org/profil">
+<profil xmlns="http://www.example.org/profil"  user="android@doro-f5sr/Smack">
     <alter></alter>
     <gewicht metric="kg">50</gewicht>
     <groesse metric="cm">160</groesse>

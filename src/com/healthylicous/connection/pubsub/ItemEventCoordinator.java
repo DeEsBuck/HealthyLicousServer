@@ -14,7 +14,7 @@ import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
 import com.healthylicous.util.DataHandler;
 import com.healthylicous.util.Compute;
-import com.healthylicous.util.ResultCoordinator;
+import com.healthylicous.util.ResultCreator;
 
 
 public class ItemEventCoordinator<T> implements ItemEventListener {
@@ -26,8 +26,6 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 		int kal;
 		String gender, user;
 		Compute comp;
-		PubSubHandler con;
-		
 		System.out.println(items.getPublishedDate());
         
         if(items.getNodeId().contains("Profile")) {
@@ -56,12 +54,12 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 					}
 				}
 		        comp = new Compute(age, weight, height, gender);
-		        ResultCoordinator res = new ResultCoordinator(getItemId(items.getItems().toString()), user, comp.defaultNeeds());
+		        newkal = comp.defaultNeeds();
+		        ResultCreator res = new ResultCreator(getItemId(items.getItems().toString()), user, newkal);
 		        System.out.println(res.getid());
 		        res.start();
 		        System.out.println("base: "+Double.toString(comp.base(age, weight, height, gender)));
 		        System.out.println("Needed def Kalories: "+Double.toString(comp.defaultNeeds()));
-		        
 				
         	}
         }        
@@ -86,14 +84,12 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 				        System.out.println("age: "+age+"; gender: "+gender+"; weight: "+weight+"; height: "+height);
 				        comp = new Compute(age, weight, height, gender);
 				        newkal = comp.newNeeds(kal);
-				        ResultCoordinator res = new ResultCoordinator(getItemId(in), user, comp.defaultNeeds());
+		        		System.out.println("Needed Kalories: "+newkal);
+				        ResultCreator res = new ResultCreator(getItemId(in), user, newkal);
 				        res.start();
-				        System.out.println("Needed def Kalories: "+Double.toString(comp.defaultNeeds()));
-		        		System.out.println("Needed Kalories: "+Double.toString(comp.newNeeds(kal)));
 		        		System.out.println("Items User: "+new DataHandler().getUser(items));
-		        		
-		        		
-					}	
+					}
+					br.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				} finally {
@@ -112,12 +108,12 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 	
 
 	private String getUser(String string) {
-		Pattern regex = Pattern.compile("user=\"[a-z]*@[a-z0-9-]*/Smack");
+		Pattern regex = Pattern.compile("user='[a-z]*@[a-z0-9-]*/Smack");
         Matcher ma = regex.matcher(string);
         String user = null;
         
         if (ma.find()) {
-            String[] result = ma.group().split("user=\"");
+            String[] result = ma.group().split("user='");
             for (String r : result) {
             	user = r;
             }

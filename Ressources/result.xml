@@ -1,96 +1,96 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<result xmlns:healthyns="http://www.example.org/result" > 
-    <vorschlag id="1" tageszeit="morgens">
-        <name metric="g" gewicht="150">Banane</name>
-        <kalorien metric="kcal">95,0</kalorien>
-       	<fluessigkeit metric="l">2,0</fluessigkeit>
+<?xml version='1.0' encoding='UTF-8'?>
+<result xmlns:healthyns='http://www.example.org/result' itemid='' user='android@doro-f5sr/Smack'> 
+    <vorschlag id='1' tageszeit='morgens'>
+        <name metric='g' gewicht='150'>Banane</name>
+        <kalorien metric='kcal'>95,0</kalorien>
+       	<fluessigkeit metric='l'>2,0</fluessigkeit>
        	<naehrstoffe>
-                <eiweiss metric="g">57,0</eiweiss>
-                <fette metric="g">30,0</fette>
-                <kohlenhydrate metric="g">300,0</kohlenhydrate>
+                <eiweiss metric='g'>57,0</eiweiss>
+                <fette metric='g'>30,0</fette>
+                <kohlenhydrate metric='g'>300,0</kohlenhydrate>
         </naehrstoffe>
         <mselemente>
-				<magnesium metric="mg">300,0</magnesium>            
-                <calcium metric="mg">1000,0</calcium>
-                <eisen metric="mg">15,0</eisen>
-                <jod metric="microg">200,0</jod>
-                <fluorid metric="mg">3,1</fluorid>
-                <zink metric="mg">7,0</zink>
-				<selen metric="microg">30,0</selen>       
+				<magnesium metric='mg'>300,0</magnesium>            
+                <calcium metric='mg'>1000,0</calcium>
+                <eisen metric='mg'>15,0</eisen>
+                <jod metric='microg'>200,0</jod>
+                <fluorid metric='mg'>3,1</fluorid>
+                <zink metric='mg'>7,0</zink>
+				<selen metric='microg'>30,0</selen>       
         </mselemente>
         <vitamine>
-				<vitamina metric="mg">0,8</vitamina>            
-                <vitamind metric="microg">5,0</vitamind>
-                <vitamine metric="mg">12,0</vitamine>
-                <vitaminb1 metric="mg">1,0</vitaminb1>
-                <vitaminb2 metric="mg">1,2</vitaminb2>
-                <vitaminb6 metric="mg">1,2</vitaminb6>
-				<vitaminb12 metric="microg">3,0</vitaminb12>
-				<vitaminc metric="mg">100,0</vitaminc>
-				<niacin metric="mg">13,0</niacin> 
-				<folsaeure metric="microg">400,0</folsaeure>
+				<vitamina metric='mg'>0,8</vitamina>            
+                <vitamind metric='microg'>5,0</vitamind>
+                <vitamine metric='mg'>12,0</vitamine>
+                <vitaminb1 metric='mg'>1,0</vitaminb1>
+                <vitaminb2 metric='mg'>1,2</vitaminb2>
+                <vitaminb6 metric='mg'>1,2</vitaminb6>
+				<vitaminb12 metric='microg'>3,0</vitaminb12>
+				<vitaminc metric='mg'>100,0</vitaminc>
+				<niacin metric='mg'>13,0</niacin> 
+				<folsaeure metric='microg'>400,0</folsaeure>
         </vitamine>
     </vorschlag>
-    <vorschlag id="2" tageszeit="mittags">
-        <name metric="g" gewicht="200" >Spaghetti</name>
-        <kalorien metric="kcal">400,0</kalorien>
-       	<fluessigkeit metric="l">2,0</fluessigkeit>
+    <vorschlag id='2' tageszeit='mittags'>
+        <name metric='g' gewicht='200' >Spaghetti</name>
+        <kalorien metric='kcal'>400,0</kalorien>
+       	<fluessigkeit metric='l'>2,0</fluessigkeit>
        	<naehrstoffe>
-                <eiweiss metric="g">57,0</eiweiss>
-                <fette metric="g">30,0</fette>
-                <kohlenhydrate metric="g">300,0</kohlenhydrate>
+                <eiweiss metric='g'>57,0</eiweiss>
+                <fette metric='g'>30,0</fette>
+                <kohlenhydrate metric='g'>300,0</kohlenhydrate>
         </naehrstoffe>
         <mselemente>
-				<magnesium metric="mg">300,0</magnesium>            
-                <calcium metric="mg">1000,0</calcium>
-                <eisen metric="mg">15,0</eisen>
-                <jod metric="microg">200,0</jod>
-                <fluorid metric="mg">3,1</fluorid>
-                <zink metric="mg">7,0</zink>
-				<selen metric="microg">30,0</selen>       
+				<magnesium metric='mg'>300,0</magnesium>            
+                <calcium metric='mg'>1000,0</calcium>
+                <eisen metric='mg'>15,0</eisen>
+                <jod metric='microg'>200,0</jod>
+                <fluorid metric='mg'>3,1</fluorid>
+                <zink metric='mg'>7,0</zink>
+				<selen metric='microg'>30,0</selen>       
         </mselemente>
         <vitamine>
-				<vitamina metric="mg">0,8</vitamina>            
-                <vitamind metric="microg">5,0</vitamind>
-                <vitamine metric="mg">12,0</vitamine>
-                <vitaminb1 metric="mg">1,0</vitaminb1>
-                <vitaminb2 metric="mg">1,2</vitaminb2>
-                <vitaminb6 metric="mg">1,2</vitaminb6>
-				<vitaminb12 metric="microg">3,0</vitaminb12>
-				<vitaminc metric="mg">100,0</vitaminc>
-				<niacin metric="mg">13,0</niacin> 
-				<folsaeure metric="microg">400,0</folsaeure>
+				<vitamina metric='mg'>0,8</vitamina>            
+                <vitamind metric='microg'>5,0</vitamind>
+                <vitamine metric='mg'>12,0</vitamine>
+                <vitaminb1 metric='mg'>1,0</vitaminb1>
+                <vitaminb2 metric='mg'>1,2</vitaminb2>
+                <vitaminb6 metric='mg'>1,2</vitaminb6>
+				<vitaminb12 metric='microg'>3,0</vitaminb12>
+				<vitaminc metric='mg'>100,0</vitaminc>
+				<niacin metric='mg'>13,0</niacin> 
+				<folsaeure metric='microg'>400,0</folsaeure>
         </vitamine>
     </vorschlag>
-    <vorschlag id="3" tageszeit="abends">
-        <name metric="g" gewicht="20">Omlette</name>
-        <kalorien metric="kcal">200,0</kalorien>
-       	<fluessigkeit metric="l">2,0</fluessigkeit>
+    <vorschlag id='3' tageszeit='abends'>
+        <name metric='g' gewicht='20'>Omlette</name>
+        <kalorien metric='kcal'>200,0</kalorien>
+       	<fluessigkeit metric='l'>2,0</fluessigkeit>
        	<naehrstoffe>
-                <eiweiss metric="g">57,0</eiweiss>
-                <fette metric="g">30,0</fette>
-                <kohlenhydrate metric="g">300,0</kohlenhydrate>
+                <eiweiss metric='g'>57,0</eiweiss>
+                <fette metric='g'>30,0</fette>
+                <kohlenhydrate metric='g'>300,0</kohlenhydrate>
         </naehrstoffe>
         <mselemente>
-				<magnesium metric="mg">300,0</magnesium>            
-                <calcium metric="mg">1000,0</calcium>
-                <eisen metric="mg">15,0</eisen>
-                <jod metric="microg">200,0</jod>
-                <fluorid metric="mg">3,1</fluorid>
-                <zink metric="mg">7,0</zink>
-				<selen metric="microg">30</selen>       
+				<magnesium metric='mg'>300,0</magnesium>            
+                <calcium metric='mg'>1000,0</calcium>
+                <eisen metric='mg'>15,0</eisen>
+                <jod metric='microg'>200,0</jod>
+                <fluorid metric='mg'>3,1</fluorid>
+                <zink metric='mg'>7,0</zink>
+				<selen metric='microg'>30</selen>       
         </mselemente>
         <vitamine>
-				<vitamina metric="mg">0,8</vitamina>            
-                <vitamind metric="microg">5,0</vitamind>
-                <vitamine metric="mg">12,0</vitamine>
-                <vitaminb1 metric="mg">1,0</vitaminb1>
-                <vitaminb2 metric="mg">1,2</vitaminb2>
-                <vitaminb6 metric="mg">1,2</vitaminb6>
-				<vitaminb12 metric="microg">3,0</vitaminb12>
-				<vitaminc metric="mg">100,0</vitaminc>
-				<niacin metric="mg">13,0</niacin> 
-				<folsaeure metric="microg">400,0</folsaeure>
+				<vitamina metric='mg'>0,8</vitamina>            
+                <vitamind metric='microg'>5,0</vitamind>
+                <vitamine metric='mg'>12,0</vitamine>
+                <vitaminb1 metric='mg'>1,0</vitaminb1>
+                <vitaminb2 metric='mg'>1,2</vitaminb2>
+                <vitaminb6 metric='mg'>1,2</vitaminb6>
+				<vitaminb12 metric='microg'>3,0</vitaminb12>
+				<vitaminc metric='mg'>100,0</vitaminc>
+				<niacin metric='mg'>13,0</niacin> 
+				<folsaeure metric='microg'>400,0</folsaeure>
         </vitamine>
     </vorschlag>    
 </result>

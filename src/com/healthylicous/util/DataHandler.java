@@ -40,12 +40,12 @@ public class DataHandler {
 	 * @return
 	 */
 	public String getUser(ItemPublishEvent items) {
-		Pattern regex = Pattern.compile("user=\"[a-z]*@[a-z0-9-]*/Smack");
+		Pattern regex = Pattern.compile("user='[a-z]*@[a-z0-9-]*/Smack");
         Matcher ma = regex.matcher(items.getItems().toString());
         String user = null;
         
         if (ma.find()) {
-            String[] result = ma.group().split("user=\"");
+            String[] result = ma.group().split("user='");
             for (String r : result) {
             	user = r;
             }
@@ -225,7 +225,7 @@ public class DataHandler {
 	public PayloadItem setResult(String itemId, String user) {
 		this.id = id;
 		this.user = user;
-		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result' user='"+user+"'>"+setVorschlag(itemId)+"</result>");
+		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result' itemid='"+itemId+"' user='"+user+"'>"+setVorschlag(id)+"</result>");
 		PayloadItem payloaditem = new PayloadItem(null, payload);
 		return payloaditem;
 	}
