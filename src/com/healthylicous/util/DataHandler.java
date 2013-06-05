@@ -39,7 +39,7 @@ public class DataHandler {
 	 * 
 	 * @return
 	 */
-	public String getUser(ItemPublishEvent items) {
+	public String getUser(ItemPublishEvent<?> items) {
 		Pattern regex = Pattern.compile("user='[a-z]*@[a-z0-9-]*/Smack");
         Matcher ma = regex.matcher(items.getItems().toString());
         String user = null;
@@ -49,8 +49,6 @@ public class DataHandler {
             for (String r : result) {
             	user = r;
             }
-            // Control output
-//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -62,7 +60,7 @@ public class DataHandler {
 	 * 
 	 * @return
 	 */
-	public String getid(ItemPublishEvent items) {
+	public String getid(ItemPublishEvent<?> items) {
 		Pattern regex = Pattern.compile("id='[a-z0-9-]*");
         Matcher ma = regex.matcher(items.getItems().toString());
         String id = null;
@@ -72,8 +70,6 @@ public class DataHandler {
             for (String r : result) {
             	id = r;
             }
-            // Control output
-//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -82,12 +78,70 @@ public class DataHandler {
 	
 	/**
 	 * 
+	 * @param lat
+	 * @param lon
+	 * @param elev
+	 * @param user
+	 * @return
+	 */
+	public PayloadItem<SimplePayload> setStrecke(String lat, String lon, String elev, String user) {
+		SimplePayload payload = new SimplePayload("strecken","http://www.example.org/strecken", "<strecken xmlns:healthyns='http://www.example.org/strecken' id='' user='android@doro-f5sr/Smack'><strecke><wayPoints>"+point(lat,lon,elev)+"</wayPoints></strecke></strecken>");
+		PayloadItem<SimplePayload> payloaditem = new PayloadItem<SimplePayload>(null, payload);
+		return payloaditem;
+	}
+	
+	/**
+	 * 
+	 * @param lat
+	 * @param lon
+	 * @param elev
+	 * @return
+	 */
+	public String point(String lat, String lon, String elev) {
+		String p = "<point><latitude>"+lat+"</latitude><longitude>"+lon+"</longitude><elevation>"+elev+"</elevation></point>";
+		return p;
+	}
+	
+	/**
+	 * Get list of each Waypoint of Strecke
+	 * @param items
+	 * @return
+	 */
+	public String[] getStrecke(String items) {
+		Pattern lat, lon, evel;
+		lat = Pattern.compile("[\\d]+.[\\d]+</latitude>");
+	    lon = Pattern.compile("[\\d]+.[\\d]+</longitude>");       
+        evel = Pattern.compile("[\\d]+.[\\d]+</elevation>");
+        String[] regExp = {"latitude", "longitude", "elevation"};
+        
+        Hashtable<String, Pattern> table = new Hashtable<String, Pattern>();
+		table.put("latitude", lat);
+		table.put("longitude", lon);
+		table.put("elevation", evel);
+        
+		String[] werteListe = new String[regExp.length];
+		for (int i = 0; i <= regExp.length - 1; i++) {
+			Matcher ma = table.get(regExp[i]).matcher(items);
+			if (ma.find()) {
+				String[] wert = ma.group().split("</" + regExp[i] + ">");
+				for (String r : wert) {
+					werteListe[i] = r;
+				}
+			}
+		}
+
+		return werteListe;
+	}
+	
+	
+	/**
+	 * 
 	 * @param input
 	 * @return
 	 */
-	public PayloadItem setKalories(String input, String user) {
+	public PayloadItem<SimplePayload> setKalories(String input, String user) {
 		SimplePayload payload = new SimplePayload("kcal","http://www.example.org/kalories", "<kalories xmlns='http://www.example.org/kalories' user='"+user+"'><base metric='kcal' >"+input+"</base></kalories>");
-		PayloadItem payloaditem = new PayloadItem(null, payload);
+		PayloadItem<SimplePayload> payloaditem = new PayloadItem<SimplePayload>(null, payload);
 		return payloaditem;
 	}
 	
@@ -96,7 +150,7 @@ public class DataHandler {
 	 * @param items
 	 * @return
 	 */
-	public String getKalories(ItemPublishEvent items) {
+	public String getKalories(ItemPublishEvent<?> items) {
 		Pattern regex = Pattern.compile("[\\d]{1,4}</base>");
         Matcher ma = regex.matcher(items.getItems().toString());
         String kalories = null;
@@ -106,8 +160,6 @@ public class DataHandler {
             for (String r : result) {
             	kalories = r;
             }
-            // Control output
-            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -123,10 +175,10 @@ public class DataHandler {
 	 * @param geschlecht
 	 * @return
 	 */
-	public PayloadItem setProfile(String user, String alter, String gewicht, String groesse, String geschlecht) {
+	public PayloadItem<SimplePayload> setProfile(String user, String alter, String gewicht, String groesse, String geschlecht) {
 		this.user = user;
 		SimplePayload payload = new SimplePayload("profil","http://www.example.org/profil", "<profil xmlns='http://www.example.org/profil' user='"+user+"'><alter>"+alter+"</alter><gewicht metric='g'>"+gewicht+"</gewicht><groesse metric='cm'>"+groesse+"</groesse><geschlecht>"+geschlecht+"</geschlecht></profil>");
-		PayloadItem payloaditem = new PayloadItem(null, payload);
+		PayloadItem<SimplePayload> payloaditem = new PayloadItem<SimplePayload>(null, payload);
 		return payloaditem;
 	}
 	
@@ -135,7 +187,7 @@ public class DataHandler {
 	 * @param items
 	 * @return
 	 */
-	public String getProfileAlter(ItemPublishEvent items) {
+	public String getProfileAlter(ItemPublishEvent<?> items) {
 		Pattern regex = Pattern.compile("[\\d]{1,2}</alter>");
         Matcher ma = regex.matcher(items.getItems().toString());
         String alter = null;
@@ -145,8 +197,6 @@ public class DataHandler {
             for (String r : result) {
             	alter = r;
             }
-            // Control output
-//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -154,7 +204,7 @@ public class DataHandler {
         return alter;
 	}
 	
-	public String getProfileGewicht(ItemPublishEvent items) {
+	public String getProfileGewicht(ItemPublishEvent<?> items) {
 		Pattern regex = Pattern.compile("[\\d]{1,3}</gewicht>");
         Matcher ma = regex.matcher(items.getItems().toString());
         String gewicht = null;
@@ -164,8 +214,6 @@ public class DataHandler {
             for (String r : result) {
             	gewicht = r;
             }
-            // Control output
-//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -173,7 +221,7 @@ public class DataHandler {
         return gewicht;
 	}
 	
-	public String getProfileGroesse(ItemPublishEvent items) {
+	public String getProfileGroesse(ItemPublishEvent<?> items) {
 		Pattern regex = Pattern.compile("[\\d]{1,3}</groesse>");
         Matcher ma = regex.matcher(items.getItems().toString());
         String groesse = null;
@@ -183,8 +231,6 @@ public class DataHandler {
             for (String r : result) {
             	groesse = r;
             }
-            // Control output
-//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -192,7 +238,7 @@ public class DataHandler {
         return groesse;
 	}
 	
-	public String getProfileGeschlecht(ItemPublishEvent items) {
+	public String getProfileGeschlecht(ItemPublishEvent<?> items) {
 		Pattern regex = Pattern.compile("female|male</geschlecht>");
         Matcher ma = regex.matcher(items.getItems().toString());
         String geschlecht = null;
@@ -202,8 +248,6 @@ public class DataHandler {
             for (String r : result) {
             	geschlecht = r;
             }
-            // Control output
-//            System.out.println(items.getItems().toString());
         }
         else
         	System.out.println("Ungültig");
@@ -211,10 +255,10 @@ public class DataHandler {
         return geschlecht;
 	}
 	
-	public PayloadItem setResult() {
+	public PayloadItem<SimplePayload> setResult() {
 		String itemId = "2";
 		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result'>"+setVorschlag(itemId)+"</result>");
-		PayloadItem payloaditem = new PayloadItem(null, payload);
+		PayloadItem<SimplePayload> payloaditem = new PayloadItem<SimplePayload>(null, payload);
 		return payloaditem;
 	}
 	
@@ -222,11 +266,11 @@ public class DataHandler {
 	 * 
 	 * @return
 	 */
-	public PayloadItem setResult(String itemId, String user) {
-		this.id = id;
+	public PayloadItem<SimplePayload> setResult(String itemId, String user) {
+		this.id = itemId;
 		this.user = user;
 		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", "<result xmlns:healthyns='http://www.example.org/result' itemid='"+itemId+"' user='"+user+"'>"+setVorschlag(id)+"</result>");
-		PayloadItem payloaditem = new PayloadItem(null, payload);
+		PayloadItem<SimplePayload> payloaditem = new PayloadItem<SimplePayload>(null, payload);
 		return payloaditem;
 	}
 	
@@ -271,9 +315,6 @@ public class DataHandler {
             	result = r;
             }
         }
-//        else {
-//        	System.out.println("kein Eintrag");
-//        }
         return result;
 	}
 	
@@ -293,9 +334,6 @@ public class DataHandler {
             	result = r;
             }
         }
-//        else {
-//        	System.out.println("kein Eintrag");
-//        }
         return result;
 	}
 	
@@ -315,9 +353,6 @@ public class DataHandler {
             	result = r;
             }
         }
-//        else {
-//        	System.out.println("kein Eintrag");
-//        }
         return result;
 	}
 	
@@ -337,14 +372,11 @@ public class DataHandler {
             	result = r;
             }
         }
-//        else {
-//        	System.out.println("kein Eintrag");
-//        }
         return result;
 	}
 	
 	/**
-	 * 
+	 * Get all Nutritions as List 
 	 * @param items
 	 * @return
 	 */
@@ -415,11 +447,8 @@ public class DataHandler {
 				String[] wert = ma.group().split("</" + regExp[i] + ">");
 				for (String r : wert) {
 					werteListe[i] = r;
-//					System.out.println(regExp[i] + ": " + result);
 				}
 			}
-//			else
-//				System.out.println("kein Eintrag");
 		}
 
 		return werteListe;

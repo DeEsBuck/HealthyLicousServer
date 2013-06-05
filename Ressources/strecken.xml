@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<strecken xmlns:healthyns='http://www.example.org/strecken' id='' user='android@doro-f5sr/Smack'>
+    <strecke>
+        <wayPoints>
+            <point>
+	            <latitude>45.508057</latitude>
+	            <longitude>-122.83315</longitude>
+	            <elevation>53.09316</elevation>
+            </point>
+            <point>
+                <latitude>45.508034</latitude>
+	            <longitude>-122.83313</longitude>
+	            <elevation>53.151</elevation>
+            </point>
+      		<point>
+                <latitude>45.50786</latitude>
+	            <longitude>-122.832954</longitude>
+	            <elevation>53.86401</elevation>
+            </point>
+            <point>
+                <latitude>45.508175</latitude>
+	            <longitude>-122.833206</longitude>
+	            <elevation>56.81296</elevation>
+            </point>
+            <point>
+                <latitude>45.508156</latitude>
+	            <longitude>-122.83318</longitude>
+	            <elevation>56.870304</elevation>
+            </point>
+            <point>
+                <latitude>45.508133</latitude>
+	            <longitude>-122.83316</longitude>
+	            <elevation>56.99327</elevation>
+            </point>
+        </wayPoints>
+    </strecke>
+</strecken>
