@@ -7,9 +7,6 @@ import com.healthylicous.connection.pubsub.HealthyLicousPubSub;
 
 public class HealthyLicousServer {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		final HealthyLicousPubSub thread = new HealthyLicousPubSub();
 		Timer timer = new Timer(thread.getName());
@@ -20,8 +17,6 @@ public class HealthyLicousServer {
 					thread.start();
 				}
 			}
-			
 		}, 100, 60000);
-	}
-	
+	}	
 }

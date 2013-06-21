@@ -1,6 +1,5 @@
 package com.healthylicous.util;
 
-import java.util.Collection;
 import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,10 +9,6 @@ import org.jivesoftware.smackx.pubsub.PayloadItem;
 import org.jivesoftware.smackx.pubsub.SimplePayload;
 
 import com.healthylicous.connection.data.Vorschlag;
-import com.healthylicous.connection.data.Vorschlag.Head;
-import com.healthylicous.connection.data.Vorschlag.Mselemente;
-import com.healthylicous.connection.data.Vorschlag.Naehrstoffe;
-import com.healthylicous.connection.data.Vorschlag.Vitamine;
 
 
 public class DataHandler {

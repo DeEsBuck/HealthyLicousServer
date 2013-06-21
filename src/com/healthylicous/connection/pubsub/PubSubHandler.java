@@ -2,7 +2,6 @@ package com.healthylicous.connection.pubsub;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +36,10 @@ public class PubSubHandler extends XMPPConnection{
 		super(config);
 	}
 	
+	/**
+	 * set topic for a instance
+	 * @param topicID
+	 */
 	public void setTopicID(String topicID) {
 		this.topicID = topicID;
 	}
@@ -92,7 +95,7 @@ public class PubSubHandler extends XMPPConnection{
 	}
 	
 	/**
-	 * 
+	 * subscribe and listen for Item Events
 	 * @param jid
 	 * @param topicID
 	 * @throws XMPPException
@@ -117,14 +120,12 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void listener(String topicID) throws XMPPException {		
+	private void listener(String topicID) throws XMPPException {		
 		getNode(topicID).addItemEventListener(new ItemEventCoordinator<Item>());
 	}
-	
 
 	/**
-	 * 
-	 * @param topicID
+	 * Get Topic ID for current connection object
 	 * @throws XMPPException
 	 */
 	public String getTopicID() throws XMPPException{
@@ -136,8 +137,8 @@ public class PubSubHandler extends XMPPConnection{
 	 * @param topicID
 	 * @throws XMPPException
 	 */
-	public void discoverNodes(String topicID) throws XMPPException {
-		System.out.println(createPubSubManager().discoverNodes(topicID).toXML());
+	public String discoverNodes(String topicID) throws XMPPException {
+		return createPubSubManager().discoverNodes(topicID).toXML();
 	}
 	
 	/**
@@ -174,7 +175,6 @@ public class PubSubHandler extends XMPPConnection{
 	 */
 	public String discoItems() throws XMPPException {
 		DiscoverItems disco = ((LeafNode)getNode(topicID)).discoverItems();
-//		System.out.println("DiscoResult: " + disco.toXML());
 		return disco.toXML();
 	}
 	
@@ -191,6 +191,11 @@ public class PubSubHandler extends XMPPConnection{
 		}
 	}
 	
+	/**
+	 * 
+	 * @param topicID
+	 * @throws XMPPException
+	 */
 	public void getCurrentItemsOf(String topicID) throws XMPPException {
 		Iterable<Subscription> id = (Iterable<Subscription>) getNode(topicID).getSubscriptions();
 		for (Subscription i : id) {
@@ -313,7 +318,6 @@ public class PubSubHandler extends XMPPConnection{
 		String subs = null;
 		for (Subscription i : id) {
 			subs = i.getId();
-//			System.out.println("SubscriptionID: " + i.getId());
 		}
 		return subs;
 	}

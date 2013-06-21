@@ -3,6 +3,7 @@ package com.healthylicous.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.io.Reader;
 
 import org.jivesoftware.smack.XMPPException;
@@ -15,6 +16,7 @@ public class ResultCreator extends Thread {
 	public static final String VORSCHLAG = "Vorschlag";
 	private static final String USER = "healthy";
 	private static final String PASSWORD = "openfire";
+	private static final String TEST = "./././././Ressources/resFett2.xml";
 	private static final String FILEFETT = "./././././Ressources/resFett.xml";
 	private static final String FILEOKAY= "./././././Ressources/resOkay.xml";
 	private static final String FILELESS = "./././././Ressources/resLess.xml";
@@ -41,7 +43,6 @@ public class ResultCreator extends Thread {
 			else { // Diät
 				thinKal();
 			}
-//			con.publishPayload(new DataHandler().setResult(itemId, user));				
 		} 
 		
 		catch (XMPPException e) {
@@ -49,7 +50,7 @@ public class ResultCreator extends Thread {
 		}
 	}
 	
-	public void fatKal() throws XMPPException {
+	private void fatKal() throws XMPPException {
 		Reader re = null;        		
 		try {
 			re = new FileReader(FILEFETT);
@@ -69,7 +70,8 @@ public class ResultCreator extends Thread {
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				re.close();
 			} catch (IOException e) {
@@ -78,7 +80,7 @@ public class ResultCreator extends Thread {
 		}
 	}
 	
-	public void midKal() throws XMPPException {
+	private void midKal() throws XMPPException {
 		Reader re = null;        		
 		try {
 			re = new FileReader(FILEOKAY);
@@ -107,7 +109,7 @@ public class ResultCreator extends Thread {
 		}
 	}
 	
-	public void thinKal() throws XMPPException {
+	private void thinKal() throws XMPPException {
 		Reader re = null;        		
 		try {
 			re = new FileReader(FILELESS);
@@ -148,9 +150,10 @@ public class ResultCreator extends Thread {
 		return user;
 	}
 
-	public PayloadItem<SimplePayload> publisher(String in) {
+	private PayloadItem<SimplePayload> publisher(String in) {
 		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", in);
 		PayloadItem<SimplePayload> item = new PayloadItem<SimplePayload>(null, payload);
+		System.out.println("published");
 		return item;
 	}
 

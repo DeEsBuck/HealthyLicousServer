@@ -1,12 +1,11 @@
 package com.healthylicous.util;
 
-import com.healthylicous.connection.data.Vorschlag;
-
 
 public class Compute {
 	String[] results;
 	String name, gender, foodweight, day;
-	double kal, age, weight, height, aqua, foodkal; 
+	double age, weight, height;
+	double kal, aqua, foodkal; 
 	double bmr;
 	double met;
 	

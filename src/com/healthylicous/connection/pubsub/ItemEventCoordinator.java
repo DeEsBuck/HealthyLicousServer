@@ -8,7 +8,6 @@ import java.io.Writer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
@@ -33,10 +32,10 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
         		System.out.println("Keine Items");
         	}
         	else {
-		        age = Double.parseDouble(new DataHandler().getProfileAlter(items));
+		        age = Double.valueOf(new DataHandler().getProfileAlter(items));
 		        gender = new DataHandler().getProfileGeschlecht(items);
-		        weight = Double.parseDouble(new com.healthylicous.util.DataHandler().getProfileGewicht(items));
-		        height = Double.parseDouble(new DataHandler().getProfileGroesse(items));
+		        weight = Double.valueOf(new com.healthylicous.util.DataHandler().getProfileGewicht(items));
+		        height = Double.valueOf(new DataHandler().getProfileGroesse(items));
 		        user = new DataHandler().getUser(items);
 		        System.out.println("age: "+age+"; gender: "+gender+"; weight: "+weight+"; height: "+height);
 		        System.out.println("User: "+user);
@@ -58,7 +57,6 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 		        ResultCreator res = new ResultCreator(getItemId(items.getItems().toString()), user, newkal);
 		        System.out.println(res.getid());
 		        res.start();
-		        System.out.println("base: "+Double.toString(comp.base(age, weight, height, gender)));
 		        System.out.println("Needed def Kalories: "+Double.toString(comp.defaultNeeds()));
 				
         	}
@@ -75,10 +73,10 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
 					BufferedReader br = new BufferedReader(re);
 					String in;
 					while ((in = br.readLine()) != null) {
-						age = Double.parseDouble(getProfileAlter(in));
+						age = Double.valueOf(getProfileAlter(in));
 				        gender = getProfileGeschlecht(in);
-				        weight = Double.parseDouble(getProfileGewicht(in));
-				        height = Double.parseDouble(getProfileGroesse(in));
+				        weight = Double.valueOf(getProfileGewicht(in));
+				        height = Double.valueOf(getProfileGroesse(in));
 				        user = getUser(in);
 				        System.out.println("tempProf User: "+user);
 				        System.out.println("age: "+age+"; gender: "+gender+"; weight: "+weight+"; height: "+height);
@@ -106,7 +104,9 @@ public class ItemEventCoordinator<T> implements ItemEventListener {
         
 	}
 	
-
+	// Es folgen private Methoden die zum auslesen der tempProfile.xml verwendet werden.
+	// Die tempProfile.xml speichert die Profil daten eines Nutzers, um auf die Person ausgerichtete Ernährungsvorschläge abzufragen.
+	// Da asynchrone Kommunikation, funtioniert die logik mementan nur für einen Test Nutzer. Für weitere Nutzer soll der Nutzer und seine Kalorien mt einer ID identifiziert werden, sprich DB
 	private String getUser(String string) {
 		Pattern regex = Pattern.compile("user='[a-z]*@[a-z0-9-]*/Smack");
         Matcher ma = regex.matcher(string);

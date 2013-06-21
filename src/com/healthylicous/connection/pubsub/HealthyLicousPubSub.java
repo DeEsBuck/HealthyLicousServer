@@ -15,7 +15,6 @@ public class HealthyLicousPubSub extends Thread {
 	private static final String PASSWORD = "openfire";
 	
 	static PubSubHandler con;
-	static Compute comp;
 	DataHandler data = new com.healthylicous.util.DataHandler();
 	
 	/**
@@ -38,7 +37,6 @@ public class HealthyLicousPubSub extends Thread {
 			connection();
 			setVorschlag();
 			subToNodes();
-			
 		} 
 		catch (XMPPException e) {
 			e.printStackTrace();
@@ -46,7 +44,7 @@ public class HealthyLicousPubSub extends Thread {
 		
 	}
 	
-	public final static void connection() throws XMPPException {
+	private final static void connection() throws XMPPException {
 		con = new PubSubHandler();
 		con.connect();
 		if (con.isConnected()) {
@@ -58,7 +56,7 @@ public class HealthyLicousPubSub extends Thread {
 
 	}
 		
-	public final static void setVorschlag() throws XMPPException {
+	private final static void setVorschlag() throws XMPPException {
 			// Controll if Node already exists, if not, create then
 			if (!con.doesNodeExist(VORSCHLAG)) {
 				System.out.println(VORSCHLAG+" does not exist. \nCreated now.");
@@ -71,7 +69,7 @@ public class HealthyLicousPubSub extends Thread {
 	}
 		
 		
-	public final static void subToNodes() throws XMPPException {	
+	private final static void subToNodes() throws XMPPException {	
 		// Server want to get some Kalories and Profile
 		if (con.doesNodeExist(KALORIES) && con.doesNodeExist(PROFILE)) {
 			con.subscribe(KALORIES, con.getUser());
@@ -83,7 +81,7 @@ public class HealthyLicousPubSub extends Thread {
 	}
 	
 	
-	public static void keepConnection() {
+	private static void keepConnection() {
 		PingManager.getInstanceFor(con).pingMyServer();
 		KeepAliveManager.getInstanceFor(con);
 		KeepAliveManager.getInstanceFor(con).setPingInterval(10000);
