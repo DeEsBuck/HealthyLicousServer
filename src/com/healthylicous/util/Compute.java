@@ -9,7 +9,6 @@ public class Compute {
 	double bmr;
 	double met;
 	
-	DataHandler data = new DataHandler();
 	
 	/**
 	  * Profile is recommended
@@ -105,7 +104,7 @@ public class Compute {
 	 * 
 	 * @param kal
 	 */
-	public void getKalories(int kal) {
+	public void setKalories(int kal) {
 		this.kal = kal;
 	}
 	

@@ -8,14 +8,13 @@ import com.healthylicous.util.DataHandler;
 import com.healthylicous.util.Compute;
 
 public class HealthyLicousPubSub extends Thread {
-	public static final String VORSCHLAG = "Vorschlag";
-	public static final String KALORIES = "Kalories";
-	public static final String PROFILE = "Profile";
+	private static final String VORSCHLAG = "Vorschlag";
+	private static final String KALORIES = "Kalories";
+	private static final String PROFILE = "Profile";
 	private static final String USER = "admin";
 	private static final String PASSWORD = "openfire";
 	
 	static PubSubHandler con;
-	DataHandler data = new com.healthylicous.util.DataHandler();
 	
 	/**
 	 * 1. Apply Connection (Test if only one Account for PubSub gets permission)
@@ -48,7 +47,6 @@ public class HealthyLicousPubSub extends Thread {
 		con = new PubSubHandler();
 		con.connect();
 		if (con.isConnected()) {
-//			keepConnection();
 			System.out.println("Connection Success!!");
 			con.login(USER, PASSWORD);
 		}
@@ -80,13 +78,4 @@ public class HealthyLicousPubSub extends Thread {
 		}			
 	}
 	
-	
-	private static void keepConnection() {
-		PingManager.getInstanceFor(con).pingMyServer();
-		KeepAliveManager.getInstanceFor(con);
-		KeepAliveManager.getInstanceFor(con).setPingInterval(10000);
-		System.out.println("lastping:" + KeepAliveManager.getInstanceFor(con).getTimeSinceLastContact());
-		System.out.println("PingInterval: "+KeepAliveManager.getInstanceFor(con).getPingInterval());
-		KeepAliveManager.getInstanceFor(con).addPingFailedListener(new PingFailedCoordinator());
-	}
 }

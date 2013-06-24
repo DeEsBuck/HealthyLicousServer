@@ -13,15 +13,13 @@ import org.jivesoftware.smackx.pubsub.SimplePayload;
 import com.healthylicous.connection.pubsub.PubSubHandler;
 
 public class ResultCreator extends Thread {
-	public static final String VORSCHLAG = "Vorschlag";
+	private static final String VORSCHLAG = "Vorschlag";
 	private static final String USER = "healthy";
 	private static final String PASSWORD = "openfire";
-	private static final String TEST = "./././././Ressources/resFett2.xml";
 	private static final String FILEFETT = "./././././Ressources/resFett.xml";
 	private static final String FILEOKAY= "./././././Ressources/resOkay.xml";
 	private static final String FILELESS = "./././././Ressources/resLess.xml";
 	double kal;
-	DataHandler data;
 	PubSubHandler con;
 	String itemId, user;
 	
