@@ -151,7 +151,6 @@ public class ResultCreator extends Thread {
 	private PayloadItem<SimplePayload> publisher(String in) {
 		SimplePayload payload = new SimplePayload("result","http://www.example.org/result", in);
 		PayloadItem<SimplePayload> item = new PayloadItem<SimplePayload>(null, payload);
-		System.out.println("published");
 		return item;
 	}
 

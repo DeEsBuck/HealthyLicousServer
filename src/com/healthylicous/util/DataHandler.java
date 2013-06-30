@@ -370,15 +370,29 @@ public class DataHandler {
         return result;
 	}
 	
+	public String getResultKalorien(String items) {
+		Pattern pat = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</kalorien>");
+		Matcher ma = pat.matcher(items);
+        String result = null;
+        
+        if (ma.find()) {
+            String[] ja = ma.group().split("</kalorien>");
+            for (String r : ja) {
+            	result = r;
+            }
+        }
+        return result;
+	}
+	
 	/**
 	 * Get all Nutritions as List 
 	 * @param items
 	 * @return
 	 */
 	public String[] getResults(String items) {
-		Pattern kalorien, flussigkeit, vitamina, vitamind, vitamine, vitaminb1, vitaminb2, vitaminb6, vitaminb12, vitaminc, niacin, folsaure, magnesium, eisen, calcium, jod, fluorid, zink, selen, eiweiss, fette, kohlehydrate;
+		Pattern flussigkeit, vitamina, vitamind, vitamine, vitaminb1, vitaminb2, vitaminb6, vitaminb12, vitaminc, niacin, folsaure, magnesium, eisen, calcium, jod, fluorid, zink, selen, eiweiss, fette, kohlehydrate;
 
-		kalorien = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</kalorien>");
+//		kalorien = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</kalorien>");
 		flussigkeit = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</fluessigkeit>");
 
 		vitamina = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</vitamina>");
@@ -404,14 +418,14 @@ public class DataHandler {
 		fette = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</fette>");
 		kohlehydrate = Pattern.compile("[0-9]+[,]{0,1}[0-9]+</kohlenhydrate>");
 
-		String[] regExp = { "kalorien", "fluessigkeit", "eiweiss", "fette",
+		String[] regExp = { "fluessigkeit", "eiweiss", "fette",
 				"kohlenhydrate", "magnesium", "eisen", "calcium", "jod",
 				"fluorid", "zink", "selen", "vitamina", "vitamind", "vitamine",
 				"vitaminb1", "vitaminb2", "vitaminb6", "vitaminb12",
 				"vitaminc", "niacin", "folsaeure" };
 
 		Hashtable<String, Pattern> table = new Hashtable<String, Pattern>();
-		table.put("kalorien", kalorien);
+//		table.put("kalorien", kalorien);
 		table.put("fluessigkeit", flussigkeit);
 		table.put("eiweiss", eiweiss);
 		table.put("fette", fette);
